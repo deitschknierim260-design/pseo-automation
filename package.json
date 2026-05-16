@@ -1,0 +1,22 @@
+{
+  "name": "pseo-automation",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "generate": "node scripts/generate-content.js",
+    "validate": "node scripts/content-validator.js",
+    "build": "node scripts/build-site.js",
+    "deploy": "npm run generate && npm run build && gh-pages -d dist",
+    "dev": "node scripts/dev-server.js",
+    "safe-deploy": "npm run generate && npm run build",
+    "review": "node scripts/review-pending.js"
+  },
+  "dependencies": {
+    "marked": "^14.1.0",
+    "gray-matter": "^4.0.3",
+    "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1"
+  }
+}
