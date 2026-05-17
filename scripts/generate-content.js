@@ -179,8 +179,10 @@ ${getRelatedArticles(safeKeyword)}
   const affiliateUrls = [
     { url: 'https://vercel.com/signup', text: '免费部署你的项目' },
     { url: 'https://www.jetbrains.com/webstorm/', text: '专业开发工具' },
-    { url: 'https://github.com/', text: '代码托管平台' },
-    { url: 'https://www.docker.com/', text: '容器化部署' }
+    { url: 'https://github.com/signup', text: '代码托管平台' },
+    { url: 'https://www.docker.com/get-started/', text: '容器化部署' },
+    { url: 'https://www.digitalocean.com/', text: '云服务器优惠' },
+    { url: 'https://aws.amazon.com/', text: 'AWS云服务' }
   ];
   const affiliate = affiliateUrls[Math.floor(Math.random() * affiliateUrls.length)];
   
