@@ -176,15 +176,19 @@ ${getRelatedArticles(safeKeyword)}
 
   const description = `本文将从基础概念入手，为你系统地介绍${safeKeyword.replace('如何', '').replace('学习', '').replace('教程', '').replace('指南', '').replace('入门', '')}的相关知识和实践经验，帮助你快速掌握核心技能。`;
   
-  const affiliateUrls = [
-    { url: 'https://vercel.com/signup', text: '免费部署你的项目' },
-    { url: 'https://www.jetbrains.com/webstorm/', text: '专业开发工具' },
-    { url: 'https://github.com/signup', text: '代码托管平台' },
-    { url: 'https://www.docker.com/get-started/', text: '容器化部署' },
-    { url: 'https://www.digitalocean.com/', text: '云服务器优惠' },
-    { url: 'https://aws.amazon.com/', text: 'AWS云服务' }
+  const affiliateTexts = [
+    '免费部署你的项目',
+    '专业开发工具',
+    '代码托管平台',
+    '容器化部署',
+    '云服务器优惠',
+    'AWS云服务'
   ];
-  const affiliate = affiliateUrls[Math.floor(Math.random() * affiliateUrls.length)];
+  const randomText = affiliateTexts[Math.floor(Math.random() * affiliateTexts.length)];
+  const affiliate = {
+    url: 'https://m.do.co/c/c9c6aa51c904',
+    text: randomText
+  };
   
   return {
     title,
