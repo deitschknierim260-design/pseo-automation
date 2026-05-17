@@ -157,14 +157,17 @@ const getRelatedArticles = (title) => {
 };
 
 const generateSitemap = async (articles) => {
-  const urlset = articles.map(article => `
+  const urlset = articles.map(article => {
+    const date = typeof article.date === 'string' ? article.date : new Date().toISOString().split('T')[0];
+    return `
     <url>
-      <loc>https://example.com/${article.slug}.html</loc>
-      <lastmod>${article.date}</lastmod>
+      <loc>https://pseo-automation.vercel.app/${article.slug}.html</loc>
+      <lastmod>${date}</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
     </url>
-  `).join('');
+  `;
+  }).join('');
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -178,7 +181,7 @@ ${urlset}
 const generateRobots = async () => {
   const robots = `User-agent: *
 Allow: /
-Sitemap: https://example.com/sitemap.xml`;
+Sitemap: https://pseo-automation.vercel.app/sitemap.xml`;
 
   await fs.writeFile(path.join(OUTPUT_DIR, 'robots.txt'), robots, 'utf-8');
   console.log('Generated: robots.txt');
