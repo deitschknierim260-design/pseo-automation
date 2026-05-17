@@ -62,8 +62,8 @@ const buildArticle = async (article, template) => {
     .replaceAll('{{author}}', article.author || '技术专家')
     .replaceAll('{{authorTitle}}', article.authorTitle || '资深开发者')
     .replaceAll('{{authorAvatar}}', article.authorAvatar || '👨‍💻')
-    .replaceAll('{{affiliateUrl}}', article.affiliateUrl || '#')
-    .replaceAll('{{affiliateCtaText}}', article.affiliateCtaText || '立即体验')
+    .replaceAll('{{affiliateUrl}}', article.affiliateUrl || 'https://m.do.co/c/c9c6aa51c904')
+    .replaceAll('{{affiliateCtaText}}', article.affiliateCtaText || '获取云服务器优惠')
     .replaceAll('{{relatedArticles}}', relatedArticles);
 
   await fs.writeFile(path.join(OUTPUT_DIR, `${article.slug}.html`), html, 'utf-8');
