@@ -176,6 +176,14 @@ ${getRelatedArticles(safeKeyword)}
 
   const description = `本文将从基础概念入手，为你系统地介绍${safeKeyword.replace('如何', '').replace('学习', '').replace('教程', '').replace('指南', '').replace('入门', '')}的相关知识和实践经验，帮助你快速掌握核心技能。`;
   
+  const affiliateUrls = [
+    { url: 'https://vercel.com/signup', text: '免费部署你的项目' },
+    { url: 'https://www.jetbrains.com/webstorm/', text: '专业开发工具' },
+    { url: 'https://github.com/', text: '代码托管平台' },
+    { url: 'https://www.docker.com/', text: '容器化部署' }
+  ];
+  const affiliate = affiliateUrls[Math.floor(Math.random() * affiliateUrls.length)];
+  
   return {
     title,
     slug,
@@ -188,7 +196,9 @@ ${getRelatedArticles(safeKeyword)}
     authorAvatar: expert.avatar,
     tlDr: tlDr,
     painPoint: painPoint,
-    coreConcept: coreConcept
+    coreConcept: coreConcept,
+    affiliateUrl: affiliate.url,
+    affiliateCtaText: affiliate.text
   };
 };
 
