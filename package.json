@@ -5,7 +5,7 @@
   "scripts": {
     "generate": "node scripts/generate-content.js",
     "validate": "node scripts/content-validator.js",
-    "build": "node scripts/build-site.js",
+    "build": "node scripts/generate-content.js && node scripts/build-site.js",
     "deploy": "npm run generate && npm run build && gh-pages -d dist",
     "dev": "node scripts/dev-server.js",
     "safe-deploy": "npm run generate && npm run build",
