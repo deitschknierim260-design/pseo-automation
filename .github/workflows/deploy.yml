@@ -10,6 +10,8 @@ on:
 
 env:
   NODE_VERSION: 20.x
+  DRIP_MODE: true
+  DRIP_COUNT: 5
 
 jobs:
   generate-content:

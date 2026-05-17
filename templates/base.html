@@ -4,34 +4,175 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="{{description}}">
-  <meta name="keywords" content="编程,技术,教程,学习">
+  <meta name="keywords" content="编程,技术,教程,学习,Python,JavaScript,React,Node.js">
+  <meta name="author" content="技术学习指南">
   <title>{{title}}</title>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://techguide.example.com/" />
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="{{title}}" />
+  <meta property="og:description" content="{{description}}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://techguide.example.com/" />
+  <meta property="og:site_name" content="技术学习指南" />
+  <meta property="og:locale" content="zh_CN" />
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{title}}" />
+  <meta name="twitter:description" content="{{description}}" />
+  <meta name="twitter:site" content="@TechGuide" />
+  
+  <!-- Schema.org Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "技术学习指南",
+    "description": "{{description}}",
+    "url": "https://techguide.example.com/",
+    "publisher": {
+      "@type": "Organization",
+      "name": "技术学习指南",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://techguide.example.com/favicon.svg"
+      }
+    }
+  }
+  </script>
+  
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>" type="image/svg+xml">
 </head>
 <body>
   <header>
     <div class="container">
-      <h1><a href="index.html">技术学习指南</a></h1>
-      <nav>
-        <ul>
-          <li><a href="index.html">首页</a></li>
-          <li><a href="#about">关于</a></li>
-        </ul>
-      </nav>
+      <div class="header-content">
+        <div class="brand">
+          <h1><a href="index.html">技术学习指南</a></h1>
+          <p class="tagline">全网首个基于AI驱动的自动化技术教程知识库</p>
+        </div>
+        <nav>
+          <a href="index.html">🏠 首页</a>
+          <a href="#categories">📁 分类</a>
+          <a href="#tags">🏷️ 标签</a>
+          <a href="#about">👤 关于</a>
+        </nav>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="搜索教程..." id="searchInput">
+        <button onclick="search()">🔍 搜索</button>
+      </div>
     </div>
   </header>
   
-  <main class="container">
-    {{content}}
-  </main>
+  <div class="container main-layout">
+    <main>
+      {{content}}
+    </main>
+    
+    <aside class="sidebar">
+      <div class="widget">
+        <h3>🔥 热门分类</h3>
+        <ul class="category-list">
+          <li><a href="#">Python</a></li>
+          <li><a href="#">JavaScript</a></li>
+          <li><a href="#">React</a></li>
+          <li><a href="#">Node.js</a></li>
+          <li><a href="#">TypeScript</a></li>
+          <li><a href="#">Docker</a></li>
+        </ul>
+      </div>
+      
+      <div class="widget">
+        <h3>🏷️ 标签云</h3>
+        <div class="tag-cloud">
+          <span class="tag-item">编程</span>
+          <span class="tag-item">前端</span>
+          <span class="tag-item">后端</span>
+          <span class="tag-item">数据库</span>
+          <span class="tag-item">DevOps</span>
+          <span class="tag-item">算法</span>
+          <span class="tag-item">面试</span>
+          <span class="tag-item">教程</span>
+          <span class="tag-item">学习</span>
+          <span class="tag-item">开发</span>
+          <span class="tag-item">性能</span>
+          <span class="tag-item">安全</span>
+        </div>
+      </div>
+      
+      <div class="widget">
+        <h3>📊 站点统计</h3>
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-value">20+</span>
+            <span class="stat-label">教程文章</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">10K+</span>
+            <span class="stat-label">字内容</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">50+</span>
+            <span class="stat-label">技术标签</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
   
   <footer>
     <div class="container">
-      <p>&copy; 2024 技术学习指南. All rights reserved.</p>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>关于我们</h4>
+          <p>专注于编程技术学习，分享最新的开发教程和学习资源</p>
+        </div>
+        <div class="footer-section">
+          <h4>快速链接</h4>
+          <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="#categories">分类</a></li>
+            <li><a href="#tags">标签</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>关注我们</h4>
+          <div class="social-links">
+            <a href="#" title="GitHub">GitHub</a>
+            <a href="#" title="Twitter">Twitter</a>
+            <a href="#" title="RSS">RSS</a>
+          </div>
+        </div>
+      </div>
+      <p class="copyright">&copy; 2024 技术学习指南. All rights reserved.</p>
     </div>
   </footer>
+  
+  <script>
+    function search() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const articles = document.querySelectorAll('.post-card');
+      articles.forEach(article => {
+        const title = article.querySelector('h2').textContent.toLowerCase();
+        const excerpt = article.querySelector('.excerpt').textContent.toLowerCase();
+        article.style.display = (title.includes(query) || excerpt.includes(query)) ? 'block' : 'none';
+      });
+    }
+    
+    document.getElementById('searchInput').addEventListener('keyup', function(e) {
+      if (e.key === 'Enter') {
+        search();
+      }
+    });
+  </script>
 </body>
 </html>
