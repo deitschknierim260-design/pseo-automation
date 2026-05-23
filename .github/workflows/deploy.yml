@@ -51,6 +51,10 @@ jobs:
         id: build
         run: npm run build
 
+      - name: SEO Health Check
+        id: seo-check
+        run: npm run seo-check
+
       - name: List generated files
         run: ls -la dist/
 

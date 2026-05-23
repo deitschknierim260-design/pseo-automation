@@ -9,7 +9,9 @@
     "deploy": "npm run generate && npm run build && gh-pages -d dist",
     "dev": "node scripts/dev-server.js",
     "safe-deploy": "npm run generate && npm run build",
-    "review": "node scripts/review-pending.js"
+    "review": "node scripts/review-pending.js",
+    "seo-check": "node scripts/seo-check.js",
+    "full-build": "npm run build && npm run seo-check"
   },
   "dependencies": {
     "marked": "^14.1.0",
