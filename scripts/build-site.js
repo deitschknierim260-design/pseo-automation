@@ -64,6 +64,9 @@ const buildArticle = async (article, template) => {
     .replaceAll('{{authorAvatar}}', article.authorAvatar || '👨‍💻')
     .replaceAll('{{affiliateUrl}}', article.affiliateUrl || 'https://m.do.co/c/c9c6aa51c904')
     .replaceAll('{{affiliateCtaText}}', article.affiliateCtaText || '获取云服务器优惠')
+    .replaceAll('{{affiliate2Url}}', article.affiliate2Url || '#')
+    .replaceAll('{{affiliate2Description}}', article.affiliate2Description || '寻找更适合的云服务方案？探索高性能云服务器，享受新用户专属优惠！')
+    .replaceAll('{{affiliate2CtaText}}', article.affiliate2CtaText || '了解更多')
     .replaceAll('{{relatedArticles}}', relatedArticles);
 
   await fs.writeFile(path.join(OUTPUT_DIR, `${article.slug}.html`), html, 'utf-8');
@@ -158,12 +161,14 @@ const getRelatedArticles = (title) => {
   `).join('');
 };
 
+const SITE_URL = 'https://pseobuilder.com';
+
 const generateSitemap = async (articles) => {
   const urlset = articles.map(article => {
     const date = typeof article.date === 'string' ? article.date : new Date().toISOString().split('T')[0];
     return `
     <url>
-      <loc>https://pseo-automation.vercel.app/${article.slug}.html</loc>
+      <loc>${SITE_URL}/${article.slug}.html</loc>
       <lastmod>${date}</lastmod>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
@@ -183,7 +188,7 @@ ${urlset}
 const generateRobots = async () => {
   const robots = `User-agent: *
 Allow: /
-Sitemap: https://pseo-automation.vercel.app/sitemap.xml`;
+Sitemap: ${SITE_URL}/sitemap.xml`;
 
   await fs.writeFile(path.join(OUTPUT_DIR, 'robots.txt'), robots, 'utf-8');
   console.log('Generated: robots.txt');
