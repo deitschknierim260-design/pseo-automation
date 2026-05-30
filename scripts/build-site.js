@@ -4,8 +4,10 @@ import matter from 'gray-matter';
 import { marked } from 'marked';
 
 const CONTENT_DIR = 'content';
+const EN_CONTENT_DIR = 'content/en';
 const TEMPLATE_DIR = 'templates';
 const OUTPUT_DIR = 'dist';
+const EN_OUTPUT_DIR = 'dist/en';
 
 const affiliateLinks = {
   cloud: {
@@ -288,17 +290,87 @@ Sitemap: ${SITE_URL}/sitemap.xml`;
   console.log('Generated: robots.txt');
 };
 
+const buildEnArticle = async (article, template) => {
+  const htmlContent = marked(article.content);
+  const tagsHtml = article.tags.slice(0, 3).map(tag => 
+    `<span class="article-tag">${tag}</span>`
+  ).join('');
+  
+  const relatedArticles = getRelatedArticles(article.title);
+  
+  const affiliateUrl = article.affiliateUrl || getAffiliateUrl(article.title, article.tags);
+  const affiliateCta = article.affiliateCtaText || getAffiliateCta(article.title, article.tags);
+  
+  const cleanSlug = article.slug.replace(/^en\//, '');
+  
+  const html = template
+    .replaceAll('{{title}}', article.title)
+    .replaceAll('{{description}}', article.excerpt)
+    .replaceAll('{{date}}', article.date)
+    .replaceAll('{{slug}}', cleanSlug)
+    .replaceAll('{{tags}}', tagsHtml)
+    .replaceAll('{{content}}', htmlContent)
+    .replaceAll('{{author}}', article.author || 'Technical Expert')
+    .replaceAll('{{authorTitle}}', article.authorTitle || 'Senior Developer')
+    .replaceAll('{{authorAvatar}}', article.authorAvatar || '👨‍💻')
+    .replaceAll('{{affiliateUrl}}', affiliateUrl)
+    .replaceAll('{{affiliateCtaText}}', affiliateCta)
+    .replaceAll('{{affiliate2Url}}', article.affiliate2Url || affiliateLinks.tools.github)
+    .replaceAll('{{affiliate2Description}}', article.affiliate2Description || 'Boost your productivity with GitHub Copilot AI coding assistant!')
+    .replaceAll('{{affiliate2CtaText}}', article.affiliate2CtaText || 'Try for free')
+    .replaceAll('{{relatedArticles}}', relatedArticles);
+
+  await fs.writeFile(path.join(EN_OUTPUT_DIR, `${cleanSlug}.html`), html, 'utf-8');
+  console.log(`Generated: en/${cleanSlug}.html`);
+};
+
+const buildEnIndex = async (articles, template) => {
+  const articleList = articles.map(article => {
+    const cleanSlug = article.slug.replace(/^en\//, '');
+    return `
+    <article class="post-card">
+      <div class="card-content">
+        <div class="card-tags">
+          ${article.tags.slice(0, 3).map(tag => `<span class="card-tag">${tag}</span>`).join('')}
+        </div>
+        <h2><a href="${cleanSlug}.html">${article.title}</a></h2>
+        <p class="excerpt">${article.excerpt}</p>
+        <div class="card-footer">
+          <span class="card-date">📅 ${article.date}</span>
+          <a href="${cleanSlug}.html" class="read-more">Read more →</a>
+        </div>
+      </div>
+    </article>
+  `;
+  }).join('');
+
+  const html = template
+    .replace('{{title}}', 'Tech Learning Guide - Programming Tutorials')
+    .replace('{{description}}', 'Learn programming with tutorials on Python, JavaScript, React and more')
+    .replace('{{content}}', `
+      <div class="page-header">
+        <h1>Tech Learning Guide</h1>
+        <p class="lead">Master programming skills with comprehensive tutorials and resources</p>
+      </div>
+      <div class="post-grid">${articleList}</div>
+    `);
+
+  await fs.writeFile(path.join(EN_OUTPUT_DIR, 'index.html'), html, 'utf-8');
+  console.log('Generated: en/index.html');
+};
+
 const main = async () => {
   await fs.emptyDir(OUTPUT_DIR);
   await fs.copy('static', OUTPUT_DIR);
   
   const baseTemplate = await loadTemplate('base');
   const articleTemplate = await loadTemplate('article');
-  const files = await fs.readdir(CONTENT_DIR);
   
   const articles = [];
+  const enArticles = [];
   let skippedForReview = 0;
   
+  const files = await fs.readdir(CONTENT_DIR);
   for (const file of files) {
     if (file.endsWith('.md')) {
       const filePath = path.join(CONTENT_DIR, file);
@@ -323,18 +395,49 @@ const main = async () => {
     }
   }
   
+  await fs.ensureDir(EN_OUTPUT_DIR);
+  const enFiles = await fs.readdir(EN_CONTENT_DIR);
+  for (const file of enFiles) {
+    if (file.endsWith('.md')) {
+      const filePath = path.join(EN_CONTENT_DIR, file);
+      const content = await fs.readFile(filePath, 'utf-8');
+      const { data, content: mdContent } = matter(content);
+      
+      enArticles.push({
+        title: data.title,
+        slug: data.slug || file.replace('.md', '').toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, '-'),
+        date: data.date,
+        description: data.description || '',
+        tags: data.tags || [],
+        content: mdContent,
+        excerpt: data.description || mdContent.substring(0, 100) + '...'
+      });
+    }
+  }
+  
   articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+  enArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
   
   await buildIndex(articles, baseTemplate);
+  await buildEnIndex(enArticles, baseTemplate);
   
   for (const article of articles) {
     await buildArticle(article, articleTemplate);
   }
   
-  await generateSitemap(articles);
+  for (const article of enArticles) {
+    await buildEnArticle(article, articleTemplate);
+  }
+  
+  const allArticles = [...articles, ...enArticles.map(a => ({...a, slug: `en/${a.slug.replace(/^en\//, '')}`}))];
+  await generateSitemap(allArticles);
   await generateRobots();
   
-  console.log(`\n✅ Successfully built ${articles.length + 3} pages!`);
+  await fs.copy('static', EN_OUTPUT_DIR, { overwrite: true });
+  
+  console.log(`\n✅ Successfully built ${articles.length + enArticles.length + 4} pages!`);
+  console.log(`   - 中文文章: ${articles.length} 篇`);
+  console.log(`   - 英文文章: ${enArticles.length} 篇`);
   if (skippedForReview > 0) {
     console.log(`⚠️ 跳过 ${skippedForReview} 篇待审核文章`);
   }
