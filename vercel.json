@@ -2,13 +2,8 @@
   "redirects": [
     {
       "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "pseo-automation.vercel.app"
-        }
-      ],
-      "destination": "https://pseobuilder.com/$1",
+      "has": [{"type": "host", "value": "pseo-automation.vercel.app"}],
+      "destination": "https://pseobuilder.net/$1",
       "permanent": true
     }
   ]
