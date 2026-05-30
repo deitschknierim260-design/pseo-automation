@@ -10,7 +10,7 @@ const OUTPUT_DIR = 'dist';
 const affiliateLinks = {
   cloud: {
     digitalocean: 'https://m.do.co/c/c9c6aa51c904',
-    vultr: 'https://www.vultr.com/?ref=YOUR_REF',
+    vultr: 'https://www.vultr.com/?ref=9903747',
     linode: 'https://www.linode.com/lp/refer/?r=YOUR_REF'
   },
   courses: {
@@ -23,31 +23,29 @@ const affiliateLinks = {
 };
 
 const topicAffiliateMap = {
-  docker: affiliateLinks.cloud.digitalocean,
-  kubernetes: affiliateLinks.cloud.digitalocean,
-  nginx: affiliateLinks.cloud.digitalocean,
-  deployment: affiliateLinks.cloud.digitalocean,
-  linux: affiliateLinks.cloud.digitalocean,
-  server: affiliateLinks.cloud.digitalocean,
+  docker: affiliateLinks.cloud.vultr,
+  kubernetes: affiliateLinks.cloud.vultr,
+  nginx: affiliateLinks.cloud.vultr,
+  deployment: affiliateLinks.cloud.vultr,
+  k8s: affiliateLinks.cloud.vultr,
+  container: affiliateLinks.cloud.vultr,
+  
+  react: affiliateLinks.cloud.digitalocean,
+  vue: affiliateLinks.cloud.digitalocean,
+  javascript: affiliateLinks.cloud.digitalocean,
+  typescript: affiliateLinks.cloud.digitalocean,
+  python: affiliateLinks.cloud.digitalocean,
+  git: affiliateLinks.cloud.digitalocean,
+  sql: affiliateLinks.cloud.digitalocean,
+  security: affiliateLinks.cloud.digitalocean,
+  performance: affiliateLinks.cloud.digitalocean,
+  web: affiliateLinks.cloud.digitalocean,
   
   learn: affiliateLinks.courses.udemy,
   tutorial: affiliateLinks.courses.udemy,
   guide: affiliateLinks.courses.udemy,
   beginners: affiliateLinks.courses.udemy,
-  introduction: affiliateLinks.courses.udemy,
-  
-  javascript: affiliateLinks.tools.github,
-  typescript: affiliateLinks.tools.github,
-  react: affiliateLinks.tools.github,
-  vue: affiliateLinks.tools.github,
-  python: affiliateLinks.tools.github,
-  nodejs: affiliateLinks.tools.github,
-  node: affiliateLinks.tools.github,
-  
-  git: affiliateLinks.tools.vercel,
-  webpack: affiliateLinks.tools.vercel,
-  build: affiliateLinks.tools.vercel,
-  seo: affiliateLinks.tools.vercel
+  introduction: affiliateLinks.courses.udemy
 };
 
 const getAffiliateUrl = (title, tags) => {
@@ -61,16 +59,43 @@ const getAffiliateUrl = (title, tags) => {
 
 const getAffiliateCta = (title, tags) => {
   const lowerTitle = title.toLowerCase();
-  if (lowerTitle.includes('learn') || lowerTitle.includes('tutorial') || lowerTitle.includes('guide')) {
-    return '探索优质课程';
+  
+  if (lowerTitle.includes('docker')) {
+    return '部署Docker容器，Vultr高性能云服务器';
   }
-  if (lowerTitle.includes('docker') || lowerTitle.includes('kubernetes') || lowerTitle.includes('cloud')) {
-    return '免费试用云服务器';
+  if (lowerTitle.includes('kubernetes') || lowerTitle.includes('k8s')) {
+    return 'K8s集群部署，Vultr云主机优惠';
   }
-  if (lowerTitle.includes('javascript') || lowerTitle.includes('react') || lowerTitle.includes('python')) {
-    return '体验AI编程助手';
+  if (lowerTitle.includes('nginx')) {
+    return 'Nginx服务器配置，Vultr专属优惠';
   }
-  return '获取开发工具';
+  if (lowerTitle.includes('deployment') || lowerTitle.includes('部署') || lowerTitle.includes('container') || lowerTitle.includes('容器')) {
+    return '云服务器部署，Vultr新用户优惠';
+  }
+  
+  if (lowerTitle.includes('python')) {
+    return 'Python项目部署，DigitalOcean云服务器';
+  }
+  if (lowerTitle.includes('javascript') || lowerTitle.includes('js')) {
+    return 'JS应用托管，DigitalOcean优惠';
+  }
+  if (lowerTitle.includes('react')) {
+    return 'React应用部署，DigitalOcean入门';
+  }
+  if (lowerTitle.includes('typescript') || lowerTitle.includes('ts')) {
+    return 'TypeScript项目，DigitalOcean云服务';
+  }
+  if (lowerTitle.includes('sql') || lowerTitle.includes('数据库')) {
+    return '数据库服务器，DigitalOcean优惠';
+  }
+  if (lowerTitle.includes('security') || lowerTitle.includes('安全')) {
+    return '安全服务器配置，DigitalOcean';
+  }
+  if (lowerTitle.includes('git') || lowerTitle.includes('版本控制')) {
+    return 'Git仓库托管，DigitalOcean云主机';
+  }
+  
+  return '开始你的项目，DigitalOcean新用户$200额度';
 };
 
 const loadTemplate = async (name) => {
