@@ -7,6 +7,72 @@ const CONTENT_DIR = 'content';
 const TEMPLATE_DIR = 'templates';
 const OUTPUT_DIR = 'dist';
 
+const affiliateLinks = {
+  cloud: {
+    digitalocean: 'https://m.do.co/c/c9c6aa51c904',
+    vultr: 'https://www.vultr.com/?ref=YOUR_REF',
+    linode: 'https://www.linode.com/lp/refer/?r=YOUR_REF'
+  },
+  courses: {
+    udemy: 'https://www.udemy.com/?aff_code=YOUR_CODE',
+  },
+  tools: {
+    github: 'https://github.com/features/copilot',
+    vercel: 'https://vercel.com/signup'
+  }
+};
+
+const topicAffiliateMap = {
+  docker: affiliateLinks.cloud.digitalocean,
+  kubernetes: affiliateLinks.cloud.digitalocean,
+  nginx: affiliateLinks.cloud.digitalocean,
+  deployment: affiliateLinks.cloud.digitalocean,
+  linux: affiliateLinks.cloud.digitalocean,
+  server: affiliateLinks.cloud.digitalocean,
+  
+  learn: affiliateLinks.courses.udemy,
+  tutorial: affiliateLinks.courses.udemy,
+  guide: affiliateLinks.courses.udemy,
+  beginners: affiliateLinks.courses.udemy,
+  introduction: affiliateLinks.courses.udemy,
+  
+  javascript: affiliateLinks.tools.github,
+  typescript: affiliateLinks.tools.github,
+  react: affiliateLinks.tools.github,
+  vue: affiliateLinks.tools.github,
+  python: affiliateLinks.tools.github,
+  nodejs: affiliateLinks.tools.github,
+  node: affiliateLinks.tools.github,
+  
+  git: affiliateLinks.tools.vercel,
+  webpack: affiliateLinks.tools.vercel,
+  build: affiliateLinks.tools.vercel,
+  seo: affiliateLinks.tools.vercel
+};
+
+const getAffiliateUrl = (title, tags) => {
+  const lowerTitle = title.toLowerCase();
+  for (const [topic, url] of Object.entries(topicAffiliateMap)) {
+    if (lowerTitle.includes(topic)) return url;
+    if (tags.some(tag => tag.toLowerCase().includes(topic))) return url;
+  }
+  return affiliateLinks.cloud.digitalocean;
+};
+
+const getAffiliateCta = (title, tags) => {
+  const lowerTitle = title.toLowerCase();
+  if (lowerTitle.includes('learn') || lowerTitle.includes('tutorial') || lowerTitle.includes('guide')) {
+    return '探索优质课程';
+  }
+  if (lowerTitle.includes('docker') || lowerTitle.includes('kubernetes') || lowerTitle.includes('cloud')) {
+    return '免费试用云服务器';
+  }
+  if (lowerTitle.includes('javascript') || lowerTitle.includes('react') || lowerTitle.includes('python')) {
+    return '体验AI编程助手';
+  }
+  return '获取开发工具';
+};
+
 const loadTemplate = async (name) => {
   const templatePath = path.join(TEMPLATE_DIR, `${name}.html`);
   return await fs.readFile(templatePath, 'utf-8');
@@ -35,7 +101,7 @@ const buildIndex = async (articles, template) => {
     .replace('{{content}}', `
       <div class="page-header">
         <h1>技术学习指南</h1>
-        <p class="lead">全网首个基于AI驱动的自动化技术教程知识库，汇集最新的编程教程和学习资源</p>
+        <p class="lead">专注于编程技术学习，提供最新的编程教程和学习资源</p>
       </div>
       <div class="post-grid">${articleList}</div>
     `);
@@ -52,6 +118,9 @@ const buildArticle = async (article, template) => {
   
   const relatedArticles = getRelatedArticles(article.title);
   
+  const affiliateUrl = article.affiliateUrl || getAffiliateUrl(article.title, article.tags);
+  const affiliateCta = article.affiliateCtaText || getAffiliateCta(article.title, article.tags);
+  
   const html = template
     .replaceAll('{{title}}', article.title)
     .replaceAll('{{description}}', article.excerpt)
@@ -62,11 +131,11 @@ const buildArticle = async (article, template) => {
     .replaceAll('{{author}}', article.author || '技术专家')
     .replaceAll('{{authorTitle}}', article.authorTitle || '资深开发者')
     .replaceAll('{{authorAvatar}}', article.authorAvatar || '👨‍💻')
-    .replaceAll('{{affiliateUrl}}', article.affiliateUrl || 'https://m.do.co/c/c9c6aa51c904')
-    .replaceAll('{{affiliateCtaText}}', article.affiliateCtaText || '获取云服务器优惠')
-    .replaceAll('{{affiliate2Url}}', article.affiliate2Url || '#')
-    .replaceAll('{{affiliate2Description}}', article.affiliate2Description || '寻找更适合的云服务方案？探索高性能云服务器，享受新用户专属优惠！')
-    .replaceAll('{{affiliate2CtaText}}', article.affiliate2CtaText || '了解更多')
+    .replaceAll('{{affiliateUrl}}', affiliateUrl)
+    .replaceAll('{{affiliateCtaText}}', affiliateCta)
+    .replaceAll('{{affiliate2Url}}', article.affiliate2Url || affiliateLinks.tools.github)
+    .replaceAll('{{affiliate2Description}}', article.affiliate2Description || '提升开发效率？GitHub Copilot AI编程助手让你的编码速度翻倍！')
+    .replaceAll('{{affiliate2CtaText}}', article.affiliate2CtaText || '免费试用')
     .replaceAll('{{relatedArticles}}', relatedArticles);
 
   await fs.writeFile(path.join(OUTPUT_DIR, `${article.slug}.html`), html, 'utf-8');
@@ -161,7 +230,7 @@ const getRelatedArticles = (title) => {
   `).join('');
 };
 
-const SITE_URL = 'https://pseobuilder.com';
+const SITE_URL = 'https://pseobuilder.net';
 
 const generateSitemap = async (articles) => {
   const urlset = articles.map(article => {
