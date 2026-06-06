@@ -125,6 +125,7 @@ const buildIndex = async (articles, template) => {
   const html = template
     .replace('{{title}}', '技术学习指南 - 编程教程汇总')
     .replace('{{description}}', '专注于编程技术学习，提供Python、JavaScript、React等技术教程和学习路线')
+    .replace('{{canonicalUrl}}', '')
     .replace('{{content}}', `
       <div class="page-header">
         <h1>技术学习指南</h1>
@@ -151,6 +152,7 @@ const buildArticle = async (article, template) => {
   const html = template
     .replaceAll('{{title}}', article.title)
     .replaceAll('{{description}}', article.excerpt)
+    .replaceAll('{{canonicalUrl}}', `${article.slug}.html`)
     .replaceAll('{{date}}', article.date)
     .replaceAll('{{slug}}', article.slug)
     .replaceAll('{{tags}}', tagsHtml)
@@ -306,6 +308,7 @@ const buildEnArticle = async (article, template) => {
   const html = template
     .replaceAll('{{title}}', article.title)
     .replaceAll('{{description}}', article.excerpt)
+    .replaceAll('{{canonicalUrl}}', `en/${cleanSlug}.html`)
     .replaceAll('{{date}}', article.date)
     .replaceAll('{{slug}}', cleanSlug)
     .replaceAll('{{tags}}', tagsHtml)
@@ -347,6 +350,7 @@ const buildEnIndex = async (articles, template) => {
   const html = template
     .replace('{{title}}', 'Tech Learning Guide - Programming Tutorials')
     .replace('{{description}}', 'Learn programming with tutorials on Python, JavaScript, React and more')
+    .replace('{{canonicalUrl}}', 'en/')
     .replace('{{content}}', `
       <div class="page-header">
         <h1>Tech Learning Guide</h1>
