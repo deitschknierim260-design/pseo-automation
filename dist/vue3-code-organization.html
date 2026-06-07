@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="本文深入讲解Vue3代码组织，包含组件拆分、目录结构和代码规范，附带3个可运行代码示例。">
+  <meta name="keywords" content="编程,技术,教程,学习,Python,JavaScript,React,Node.js">
+  <meta name="author" content="技术学习指南">
+  <title>Vue3代码组织 - 技术学习指南</title>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://pseobuilder.net/vue3-code-organization.html" />
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Vue3代码组织 - 技术学习指南" />
+  <meta property="og:description" content="本文深入讲解Vue3代码组织，包含组件拆分、目录结构和代码规范，附带3个可运行代码示例。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://pseobuilder.net/vue3-code-organization.html" />
+  <meta property="og:site_name" content="技术学习指南" />
+  <meta property="og:locale" content="zh_CN" />
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Vue3代码组织 - 技术学习指南" />
+  <meta name="twitter:description" content="本文深入讲解Vue3代码组织，包含组件拆分、目录结构和代码规范，附带3个可运行代码示例。" />
+  <meta name="twitter:site" content="@TechGuide" />
+  
+  <!-- Schema.org Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "首页",
+            "item": "https://pseobuilder.net/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "技术教程",
+            "item": "https://pseobuilder.net/#categories"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Vue3代码组织",
+            "item": "https://pseobuilder.net/vue3-code-organization.html"
+          }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "#article",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://pseobuilder.net/vue3-code-organization.html"
+        },
+        "headline": "Vue3代码组织",
+        "description": "本文深入讲解Vue3代码组织，包含组件拆分、目录结构和代码规范，附带3个可运行代码示例。",
+        "author": {
+          "@type": "Person",
+          "name": "技术专家"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "技术学习指南",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://pseobuilder.net/favicon.svg"
+          }
+        },
+        "datePublished": "2026-05-30",
+        "dateModified": "2026-05-30",
+        "articleSection": "技术教程",
+        "keywords": ["编程", "技术", "教程", "学习"]
+      }
+    ]
+  }
+  </script>
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>" type="image/svg+xml">
+</head>
+<body class="bg-slate-50">
+  <nav class="bg-white border-b border-slate-100 py-4 px-6 sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto flex justify-between items-center">
+      <a href="index.html" class="font-bold text-slate-900 flex items-center gap-2 text-lg">
+        <span class="p-1.5 bg-indigo-600 text-white rounded-lg text-xs">AI</span> 技术学习指南
+      </a>
+      <a href="index.html" class="text-sm text-indigo-600 font-medium hover:underline">← 返回首页</a>
+    </div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <article class="article-card">
+      
+      <div class="breadcrumbs">
+        <a href="index.html">首页</a>
+        <span>/</span>
+        <a href="index.html#categories">技术教程</a>
+        <span>/</span>
+        <span class="text-indigo-600 font-medium">Vue3代码组织</span>
+      </div>
+
+      <div class="article-header">
+        <div class="author-badge">
+          <span class="author-avatar">👨‍💻</span>
+          <span class="author-info">
+            <span class="author-name">技术专家</span>
+            <span class="author-title">资深开发者</span>
+          </span>
+          <span class="update-badge">最后更新于 2026-05-30</span>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-3 mt-4">
+          <span class="article-tag">技术</span><span class="article-tag">编程</span><span class="article-tag">开发</span>
+        </div>
+        <h1 class="article-title">Vue3代码组织</h1>
+        <div class="article-meta">
+          <span>📅 更新时间：2026-05-30</span>
+          <span>•</span>
+          <span>⏱️ 预计阅读时间 8 分钟</span>
+          <span>•</span>
+          <span>📚 10K+ 字深度好文</span>
+        </div>
+      </div>
+
+      <div class="article-content">
+        <h2>🎯 学习目标</h2>
+<p>通过本文，你将深入理解Vue3代码组织的核心原理和实践应用，掌握以下关键技能：</p>
+<ul>
+<li>组件拆分的基本概念和工作机制</li>
+<li>目录结构的进阶技巧和最佳实践</li>
+<li>代码规范的实际应用和性能优化
+<strong>预计学习时间：12小时</strong></li>
+</ul>
+<h2>💡 核心概念详解</h2>
+<p>Vue3代码组织是Vue开发中的关键知识点，掌握这些技能可以构建高质量的Vue应用。</p>
+<h3>基础用法</h3>
+<pre><code class="language-vue">&lt;script setup&gt;
+import { ref, computed } from &#39;vue&#39;;
+
+const count = ref(0);
+const doubled = computed(() =&gt; count.value * 2);
+
+function increment() {
+  count.value++;
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;p&gt;Count: {{ count }} (doubled: {{ doubled }})&lt;/p&gt;
+    &lt;button @click=&quot;increment&quot;&gt;Increment&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<h3>进阶用法</h3>
+<pre><code class="language-vue">&lt;script setup&gt;
+import { ref, reactive, watch, onMounted, onUnmounted } from &#39;vue&#39;;
+
+const searchQuery = ref(&#39;&#39;);
+const searchResults = ref([]);
+const isLoading = ref(false);
+let debounceTimer = null;
+
+watch(searchQuery, (newVal) =&gt; {
+  if (debounceTimer) clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() =&gt; {
+    performSearch(newVal);
+  }, 300);
+});
+
+async function performSearch(query) {
+  if (!query.trim()) {
+    searchResults.value = [];
+    return;
+  }
+
+  isLoading.value = true;
+  try {
+    const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+    searchResults.value = await response.json();
+  } catch (error) {
+    console.error(&#39;Search failed:&#39;, error);
+  } finally {
+    isLoading.value = false;
+  }
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;input 
+      v-model=&quot;searchQuery&quot; 
+      placeholder=&quot;Search...&quot;
+      :disabled=&quot;isLoading&quot;
+    /&gt;
+    &lt;div v-if=&quot;isLoading&quot;&gt;Loading...&lt;/div&gt;
+    &lt;ul v-else&gt;
+      &lt;li v-for=&quot;result in searchResults&quot; :key=&quot;result.id&quot;&gt;
+        {{ result.title }}
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<h3>实战场景</h3>
+<pre><code class="language-vue">&lt;script setup&gt;
+import { ref, provide, inject } from &#39;vue&#39;;
+
+const ThemeSymbol = Symbol(&#39;theme&#39;);
+
+function ThemeProvider({ children }) {
+  const theme = ref(&#39;light&#39;);
+
+  function toggleTheme() {
+    theme.value = theme.value === &#39;light&#39; ? &#39;dark&#39; : &#39;light&#39;;
+  }
+
+  provide(ThemeSymbol, { theme, toggleTheme });
+  return children;
+}
+
+function ThemeButton() {
+  const { theme, toggleTheme } = inject(ThemeSymbol);
+  return (
+    &lt;button onClick=&quot;toggleTheme&quot;&gt;
+      Current theme: {theme}
+    &lt;/button&gt;
+  );
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;ThemeProvider&gt;
+    &lt;ThemeButton /&gt;
+  &lt;/ThemeProvider&gt;
+&lt;/template&gt;
+</code></pre>
+<h2>📖 深入理解组件拆分</h2>
+<p>组件拆分是Vue3的核心响应式系统。</p>
+<h3>核心原理</h3>
+<p>Vue3使用Proxy代理实现响应式，当数据变化时自动更新视图。</p>
+<h3>关键特性</h3>
+<ol>
+<li><strong>ref</strong>: 创建响应式基本类型</li>
+<li><strong>reactive</strong>: 创建响应式对象</li>
+<li><strong>computed</strong>: 计算属性</li>
+<li><strong>watch</strong>: 侦听器</li>
+</ol>
+<h3>常见误区</h3>
+<ul>
+<li><strong>直接赋值</strong>: 直接替换reactive对象会失去响应性</li>
+<li><strong>解构问题</strong>: 解构reactive对象会失去响应性</li>
+<li><strong>数组索引</strong>: 通过索引修改数组需要特殊处理</li>
+</ul>
+<h2>📖 掌握目录结构</h2>
+<p>目录结构是Vue3的组合式API。</p>
+<h3>优势对比</h3>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Options API</td>
+<td>易于理解</td>
+<td>代码分散</td>
+<td>简单组件</td>
+</tr>
+<tr>
+<td>Composition API</td>
+<td>逻辑聚合</td>
+<td>学习曲线</td>
+<td>复杂组件</td>
+</tr>
+</tbody></table>
+<h3>最佳实践</h3>
+<ol>
+<li><strong>逻辑复用</strong>: 将可复用逻辑提取为composables</li>
+<li><strong>代码组织</strong>: 按功能组织代码</li>
+<li><strong>类型支持</strong>: 配合TypeScript使用</li>
+</ol>
+<h2>📖 实践代码规范</h2>
+<p>代码规范是Vue3状态管理的重要内容。</p>
+<h3>Pinia使用示例</h3>
+<pre><code class="language-javascript">import { defineStore } from &#39;pinia&#39;;
+
+export const useCounterStore = defineStore(&#39;counter&#39;, {
+  state: () =&gt; ({
+    count: 0
+  }),
+  getters: {
+    doubled: (state) =&gt; state.count * 2
+  },
+  actions: {
+    increment() {
+      this.count++;
+    }
+  }
+});
+</code></pre>
+<h3>状态持久化</h3>
+<p>使用pinia-plugin-persistedstate实现状态持久化。</p>
+<h2>⚖️ 方案对比</h2>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Pinia</td>
+<td>轻量简洁</td>
+<td>生态较小</td>
+<td>Vue3项目</td>
+</tr>
+<tr>
+<td>Vuex</td>
+<td>功能完整</td>
+<td>复杂</td>
+<td>Vue2项目</td>
+</tr>
+</tbody></table>
+<h2>📚 推荐学习资源</h2>
+<ul>
+<li><a href="https://vuejs.org/">Vue官方文档</a> — 官方指南</li>
+<li><a href="https://www.vuemastery.com/">Vue Mastery</a> — 视频教程</li>
+<li><a href="https://vueschool.io/">Vue School</a> — 学习平台</li>
+</ul>
+<h2>🚀 实践建议</h2>
+<p>Vue应用部署推荐使用<a href="https://vercel.com/signup">Vercel</a>或<a href="https://www.netlify.com/">Netlify</a>！</p>
+
+      </div>
+
+      <div class="affiliate-card">
+        <div class="affiliate-icon">🚀</div>
+        <div class="affiliate-content">
+          <h4>🎯 推荐工具</h4>
+          <p>想提升你的开发效率？点击下方链接获取专属优惠，开启高效开发之旅！</p>
+        </div>
+        <a href="https://m.do.co/c/c9c6aa51c904" target="_blank" rel="nofollow noopener" class="affiliate-button">开始你的项目，DigitalOcean新用户$200额度 →</a>
+      </div>
+
+      <div class="affiliate-card secondary">
+        <div class="affiliate-icon">☁️</div>
+        <div class="affiliate-content">
+          <h4>🔥 云服务推荐</h4>
+          <p>提升开发效率？GitHub Copilot AI编程助手让你的编码速度翻倍！</p>
+        </div>
+        <a href="https://github.com/features/copilot" target="_blank" rel="nofollow noopener" class="affiliate-button">免费试用 →</a>
+      </div>
+
+      <div class="feedback-section">
+        <p class="feedback-title">📊 本文是否解决了你的问题？</p>
+        <div class="feedback-buttons">
+          <button class="feedback-btn positive" onclick="handleFeedback(true)">👍 是的，很有帮助</button>
+          <button class="feedback-btn negative" onclick="handleFeedback(false)">👎 需要改进</button>
+        </div>
+        <p class="feedback-thanks" id="feedbackThanks" style="display: none;">感谢你的反馈！我们会继续改进内容质量。</p>
+      </div>
+
+      <div class="related-articles">
+        <h3>📖 相关推荐</h3>
+        <div class="related-list">
+          
+    <div class="related-item">
+      <a href="vue3-composition-api.html">Vue3组合式API详解</a>
+    </div>
+  
+    <div class="related-item">
+      <a href="pinia-state-management.html">Pinia状态管理</a>
+    </div>
+  
+    <div class="related-item">
+      <a href="vue-router-guide.html">Vue Router实战</a>
+    </div>
+  
+        </div>
+      </div>
+
+      <div class="article-footer">
+        <p>⚠️ 免责声明：本站内容仅供技术参考，请以官方文档为准。</p>
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="bg-white border-t border-slate-100 py-8 mt-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm text-slate-400">© 2024 技术学习指南 - 专注于编程技术学习</p>
+        <div class="flex gap-4 text-sm text-slate-400">
+          <a href="index.html" class="hover:text-indigo-600">首页</a>
+          <a href="#" class="hover:text-indigo-600">关于</a>
+          <a href="#" class="hover:text-indigo-600">隐私政策</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function handleFeedback(isPositive) {
+      document.getElementById('feedbackThanks').style.display = 'block';
+      const buttons = document.querySelectorAll('.feedback-btn');
+      buttons.forEach(btn => btn.disabled = true);
+      
+      if (isPositive) {
+        document.querySelector('.feedback-btn.positive').classList.add('selected');
+      } else {
+        document.querySelector('.feedback-btn.negative').classList.add('selected');
+      }
+    }
+  </script>
+</body>
+</html>

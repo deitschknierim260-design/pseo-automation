@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="本文深入讲解React数据获取策略，包含React Query、SWR和自定义Hook，附带3个可运行代码示例。">
+  <meta name="keywords" content="编程,技术,教程,学习,Python,JavaScript,React,Node.js">
+  <meta name="author" content="技术学习指南">
+  <title>React数据获取策略 - 技术学习指南</title>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://pseobuilder.net/react-data-fetching.html" />
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="React数据获取策略 - 技术学习指南" />
+  <meta property="og:description" content="本文深入讲解React数据获取策略，包含React Query、SWR和自定义Hook，附带3个可运行代码示例。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://pseobuilder.net/react-data-fetching.html" />
+  <meta property="og:site_name" content="技术学习指南" />
+  <meta property="og:locale" content="zh_CN" />
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="React数据获取策略 - 技术学习指南" />
+  <meta name="twitter:description" content="本文深入讲解React数据获取策略，包含React Query、SWR和自定义Hook，附带3个可运行代码示例。" />
+  <meta name="twitter:site" content="@TechGuide" />
+  
+  <!-- Schema.org Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "首页",
+            "item": "https://pseobuilder.net/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "技术教程",
+            "item": "https://pseobuilder.net/#categories"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "React数据获取策略",
+            "item": "https://pseobuilder.net/react-data-fetching.html"
+          }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "#article",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://pseobuilder.net/react-data-fetching.html"
+        },
+        "headline": "React数据获取策略",
+        "description": "本文深入讲解React数据获取策略，包含React Query、SWR和自定义Hook，附带3个可运行代码示例。",
+        "author": {
+          "@type": "Person",
+          "name": "技术专家"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "技术学习指南",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://pseobuilder.net/favicon.svg"
+          }
+        },
+        "datePublished": "2026-05-30",
+        "dateModified": "2026-05-30",
+        "articleSection": "技术教程",
+        "keywords": ["编程", "技术", "教程", "学习"]
+      }
+    ]
+  }
+  </script>
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>" type="image/svg+xml">
+</head>
+<body class="bg-slate-50">
+  <nav class="bg-white border-b border-slate-100 py-4 px-6 sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto flex justify-between items-center">
+      <a href="index.html" class="font-bold text-slate-900 flex items-center gap-2 text-lg">
+        <span class="p-1.5 bg-indigo-600 text-white rounded-lg text-xs">AI</span> 技术学习指南
+      </a>
+      <a href="index.html" class="text-sm text-indigo-600 font-medium hover:underline">← 返回首页</a>
+    </div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <article class="article-card">
+      
+      <div class="breadcrumbs">
+        <a href="index.html">首页</a>
+        <span>/</span>
+        <a href="index.html#categories">技术教程</a>
+        <span>/</span>
+        <span class="text-indigo-600 font-medium">React数据获取策略</span>
+      </div>
+
+      <div class="article-header">
+        <div class="author-badge">
+          <span class="author-avatar">👨‍💻</span>
+          <span class="author-info">
+            <span class="author-name">技术专家</span>
+            <span class="author-title">资深开发者</span>
+          </span>
+          <span class="update-badge">最后更新于 2026-05-30</span>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-3 mt-4">
+          <span class="article-tag">技术</span><span class="article-tag">编程</span><span class="article-tag">开发</span>
+        </div>
+        <h1 class="article-title">React数据获取策略</h1>
+        <div class="article-meta">
+          <span>📅 更新时间：2026-05-30</span>
+          <span>•</span>
+          <span>⏱️ 预计阅读时间 8 分钟</span>
+          <span>•</span>
+          <span>📚 10K+ 字深度好文</span>
+        </div>
+      </div>
+
+      <div class="article-content">
+        <h2>🎯 学习目标</h2>
+<p>通过本文，你将深入理解React数据获取策略的核心原理和实践应用，掌握以下关键技能：</p>
+<ul>
+<li>React Query的基本概念和工作机制</li>
+<li>SWR的进阶技巧和最佳实践</li>
+<li>自定义Hook的实际应用和性能优化
+<strong>预计学习时间：12小时</strong></li>
+</ul>
+<h2>💡 核心概念详解</h2>
+<p>React数据获取策略是React开发中的重要话题，对于构建高效、可维护的应用至关重要。</p>
+<h3>基础用法</h3>
+<pre><code class="language-jsx">// React数据获取策略基础示例
+import { useState, useEffect } from &#39;react&#39;;
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() =&gt; {
+    document.title = `Count: ${count}`;
+  }, [count]);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(c =&gt; c + 1)}&gt;
+        Increment
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<h3>进阶用法</h3>
+<pre><code class="language-jsx">// React数据获取策略进阶示例
+import { useState, useEffect, useCallback } from &#39;react&#39;;
+
+function DataList({ fetchUrl }) {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchData = useCallback(async () =&gt; {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await fetch(fetchUrl);
+      if (!response.ok) throw new Error(&#39;Failed to fetch&#39;);
+      const result = await response.json();
+      setData(result);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [fetchUrl]);
+
+  useEffect(() =&gt; {
+    fetchData();
+    const interval = setInterval(fetchData, 5000);
+    return () =&gt; clearInterval(interval);
+  }, [fetchData]);
+
+  if (loading) return &lt;div&gt;Loading...&lt;/div&gt;;
+  if (error) return &lt;div&gt;Error: {error}&lt;/div&gt;;
+
+  return (
+    &lt;ul&gt;
+      {data.map(item =&gt; (
+        &lt;li key={item.id}&gt;{item.name}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+</code></pre>
+<h3>实战场景</h3>
+<pre><code class="language-jsx">// React数据获取策略实战示例 - 自定义Hook
+import { useState, useCallback, useEffect } from &#39;react&#39;;
+
+function useLocalStorage(key, initialValue) {
+  const [storedValue, setStoredValue] = useState(() =&gt; {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch {
+      return initialValue;
+    }
+  });
+
+  const setValue = useCallback((value) =&gt; {
+    try {
+      setStoredValue(value);
+      window.localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      console.error(&#39;Error saving to localStorage:&#39;, error);
+    }
+  }, [key]);
+
+  useEffect(() =&gt; {
+    const handleStorageChange = (e) =&gt; {
+      if (e.key === key) {
+        try {
+          setStoredValue(JSON.parse(e.newValue));
+        } catch {
+          setStoredValue(e.newValue);
+        }
+      }
+    };
+
+    window.addEventListener(&#39;storage&#39;, handleStorageChange);
+    return () =&gt; window.removeEventListener(&#39;storage&#39;, handleStorageChange);
+  }, [key]);
+
+  return [storedValue, setValue];
+}
+
+// 使用示例
+function ThemeSwitcher() {
+  const [theme, setTheme] = useLocalStorage(&#39;theme&#39;, &#39;light&#39;);
+
+  const toggleTheme = () =&gt; {
+    setTheme(prev =&gt; prev === &#39;light&#39; ? &#39;dark&#39; : &#39;light&#39;);
+  };
+
+  return (
+    &lt;button onClick={toggleTheme}&gt;
+      Switch to {theme === &#39;light&#39; ? &#39;dark&#39; : &#39;light&#39;} mode
+    &lt;/button&gt;
+  );
+}
+</code></pre>
+<h2>📖 深入理解React Query</h2>
+<p>React Query是React Hooks的核心概念。</p>
+<h3>核心原理</h3>
+<p>Hooks允许在函数组件中使用状态和其他React特性，无需编写类组件。</p>
+<h3>关键特性</h3>
+<ol>
+<li><strong>useState</strong>: 添加状态到函数组件</li>
+<li><strong>useEffect</strong>: 处理副作用</li>
+<li><strong>useContext</strong>: 访问Context</li>
+<li><strong>useReducer</strong>: 复杂状态管理</li>
+</ol>
+<h3>常见误区</h3>
+<ul>
+<li><strong>依赖数组遗漏</strong>: 忘记添加依赖会导致陈旧闭包</li>
+<li><strong>无限循环</strong>: useEffect依赖不当导致重复执行</li>
+<li><strong>条件Hook</strong>: Hooks必须在函数顶部无条件调用</li>
+</ul>
+<h2>📖 掌握SWR</h2>
+<p>SWR是React状态管理的重要内容。</p>
+<h3>方案对比</h3>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>useState</td>
+<td>简单易用</td>
+<td>不适合复杂状态</td>
+<td>组件内部状态</td>
+</tr>
+<tr>
+<td>Context API</td>
+<td>跨组件共享</td>
+<td>性能一般</td>
+<td>全局简单状态</td>
+</tr>
+<tr>
+<td>Redux</td>
+<td>可预测状态</td>
+<td>样板代码多</td>
+<td>大型复杂应用</td>
+</tr>
+<tr>
+<td>Zustand</td>
+<td>轻量简洁</td>
+<td>生态较小</td>
+<td>中小型应用</td>
+</tr>
+</tbody></table>
+<h3>最佳实践</h3>
+<ol>
+<li><strong>状态最小化</strong>: 只保留必要的状态</li>
+<li><strong>状态提升</strong>: 将共享状态提升到公共父组件</li>
+<li><strong>选择合适工具</strong>: 根据项目规模选择状态管理方案</li>
+</ol>
+<h2>📖 实践自定义Hook</h2>
+<p>自定义Hook是React性能优化的关键技巧。</p>
+<h3>优化策略</h3>
+<ol>
+<li><strong>memo</strong>: 避免不必要的重渲染</li>
+<li><strong>useMemo</strong>: 缓存计算结果</li>
+<li><strong>useCallback</strong>: 缓存函数引用</li>
+<li><strong>React.memo</strong>: 组件级别的memoization</li>
+</ol>
+<h3>性能监控</h3>
+<p>使用React DevTools的Profiler工具分析组件渲染性能。</p>
+<h2>⚖️ 方案对比</h2>
+<table>
+<thead>
+<tr>
+<th>优化方案</th>
+<th>效果</th>
+<th>实现难度</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>memo</td>
+<td>减少重渲染</td>
+<td>简单</td>
+<td>频繁更新的组件</td>
+</tr>
+<tr>
+<td>useMemo</td>
+<td>缓存计算</td>
+<td>中等</td>
+<td>复杂计算场景</td>
+</tr>
+<tr>
+<td>代码分割</td>
+<td>减少首屏体积</td>
+<td>中等</td>
+<td>大型应用</td>
+</tr>
+</tbody></table>
+<h2>📚 推荐学习资源</h2>
+<ul>
+<li><a href="https://react.dev/">React官方文档</a> — 最新官方指南</li>
+<li><a href="https://reactpatterns.com/">React Patterns</a> — 设计模式</li>
+<li><a href="https://reacttraining.com/">React Training</a> — 专业培训资源</li>
+</ul>
+<h2>🚀 实践建议</h2>
+<p>React应用部署推荐使用<a href="https://vercel.com/signup">Vercel</a>，一键部署，体验极佳！</p>
+
+      </div>
+
+      <div class="affiliate-card">
+        <div class="affiliate-icon">🚀</div>
+        <div class="affiliate-content">
+          <h4>🎯 推荐工具</h4>
+          <p>想提升你的开发效率？点击下方链接获取专属优惠，开启高效开发之旅！</p>
+        </div>
+        <a href="https://m.do.co/c/c9c6aa51c904" target="_blank" rel="nofollow noopener" class="affiliate-button">React应用部署，DigitalOcean入门 →</a>
+      </div>
+
+      <div class="affiliate-card secondary">
+        <div class="affiliate-icon">☁️</div>
+        <div class="affiliate-content">
+          <h4>🔥 云服务推荐</h4>
+          <p>提升开发效率？GitHub Copilot AI编程助手让你的编码速度翻倍！</p>
+        </div>
+        <a href="https://github.com/features/copilot" target="_blank" rel="nofollow noopener" class="affiliate-button">免费试用 →</a>
+      </div>
+
+      <div class="feedback-section">
+        <p class="feedback-title">📊 本文是否解决了你的问题？</p>
+        <div class="feedback-buttons">
+          <button class="feedback-btn positive" onclick="handleFeedback(true)">👍 是的，很有帮助</button>
+          <button class="feedback-btn negative" onclick="handleFeedback(false)">👎 需要改进</button>
+        </div>
+        <p class="feedback-thanks" id="feedbackThanks" style="display: none;">感谢你的反馈！我们会继续改进内容质量。</p>
+      </div>
+
+      <div class="related-articles">
+        <h3>📖 相关推荐</h3>
+        <div class="related-list">
+          
+    <div class="related-item">
+      <a href="react-hooks-guide.html">React Hooks完全指南</a>
+    </div>
+  
+    <div class="related-item">
+      <a href="redux-state-management.html">Redux状态管理详解</a>
+    </div>
+  
+    <div class="related-item">
+      <a href="react-performance-tips.html">React性能优化实战</a>
+    </div>
+  
+        </div>
+      </div>
+
+      <div class="article-footer">
+        <p>⚠️ 免责声明：本站内容仅供技术参考，请以官方文档为准。</p>
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="bg-white border-t border-slate-100 py-8 mt-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm text-slate-400">© 2024 技术学习指南 - 专注于编程技术学习</p>
+        <div class="flex gap-4 text-sm text-slate-400">
+          <a href="index.html" class="hover:text-indigo-600">首页</a>
+          <a href="#" class="hover:text-indigo-600">关于</a>
+          <a href="#" class="hover:text-indigo-600">隐私政策</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function handleFeedback(isPositive) {
+      document.getElementById('feedbackThanks').style.display = 'block';
+      const buttons = document.querySelectorAll('.feedback-btn');
+      buttons.forEach(btn => btn.disabled = true);
+      
+      if (isPositive) {
+        document.querySelector('.feedback-btn.positive').classList.add('selected');
+      } else {
+        document.querySelector('.feedback-btn.negative').classList.add('selected');
+      }
+    }
+  </script>
+</body>
+</html>

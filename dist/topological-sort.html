@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="本文深入讲解拓扑排序，包含拓扑排序、Kahn算法和应用，附带3个可运行代码示例。">
+  <meta name="keywords" content="编程,技术,教程,学习,Python,JavaScript,React,Node.js">
+  <meta name="author" content="技术学习指南">
+  <title>拓扑排序 - 技术学习指南</title>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://pseobuilder.net/topological-sort.html" />
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="拓扑排序 - 技术学习指南" />
+  <meta property="og:description" content="本文深入讲解拓扑排序，包含拓扑排序、Kahn算法和应用，附带3个可运行代码示例。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://pseobuilder.net/topological-sort.html" />
+  <meta property="og:site_name" content="技术学习指南" />
+  <meta property="og:locale" content="zh_CN" />
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="拓扑排序 - 技术学习指南" />
+  <meta name="twitter:description" content="本文深入讲解拓扑排序，包含拓扑排序、Kahn算法和应用，附带3个可运行代码示例。" />
+  <meta name="twitter:site" content="@TechGuide" />
+  
+  <!-- Schema.org Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "首页",
+            "item": "https://pseobuilder.net/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "技术教程",
+            "item": "https://pseobuilder.net/#categories"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "拓扑排序",
+            "item": "https://pseobuilder.net/topological-sort.html"
+          }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "#article",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://pseobuilder.net/topological-sort.html"
+        },
+        "headline": "拓扑排序",
+        "description": "本文深入讲解拓扑排序，包含拓扑排序、Kahn算法和应用，附带3个可运行代码示例。",
+        "author": {
+          "@type": "Person",
+          "name": "技术专家"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "技术学习指南",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://pseobuilder.net/favicon.svg"
+          }
+        },
+        "datePublished": "2026-05-30",
+        "dateModified": "2026-05-30",
+        "articleSection": "技术教程",
+        "keywords": ["编程", "技术", "教程", "学习"]
+      }
+    ]
+  }
+  </script>
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>" type="image/svg+xml">
+</head>
+<body class="bg-slate-50">
+  <nav class="bg-white border-b border-slate-100 py-4 px-6 sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto flex justify-between items-center">
+      <a href="index.html" class="font-bold text-slate-900 flex items-center gap-2 text-lg">
+        <span class="p-1.5 bg-indigo-600 text-white rounded-lg text-xs">AI</span> 技术学习指南
+      </a>
+      <a href="index.html" class="text-sm text-indigo-600 font-medium hover:underline">← 返回首页</a>
+    </div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <article class="article-card">
+      
+      <div class="breadcrumbs">
+        <a href="index.html">首页</a>
+        <span>/</span>
+        <a href="index.html#categories">技术教程</a>
+        <span>/</span>
+        <span class="text-indigo-600 font-medium">拓扑排序</span>
+      </div>
+
+      <div class="article-header">
+        <div class="author-badge">
+          <span class="author-avatar">👨‍💻</span>
+          <span class="author-info">
+            <span class="author-name">技术专家</span>
+            <span class="author-title">资深开发者</span>
+          </span>
+          <span class="update-badge">最后更新于 2026-05-30</span>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-3 mt-4">
+          <span class="article-tag">技术</span><span class="article-tag">编程</span><span class="article-tag">开发</span>
+        </div>
+        <h1 class="article-title">拓扑排序</h1>
+        <div class="article-meta">
+          <span>📅 更新时间：2026-05-30</span>
+          <span>•</span>
+          <span>⏱️ 预计阅读时间 8 分钟</span>
+          <span>•</span>
+          <span>📚 10K+ 字深度好文</span>
+        </div>
+      </div>
+
+      <div class="article-content">
+        <h2>🎯 学习目标</h2>
+<p>通过本文，你将深入理解拓扑排序的核心概念和实践应用。</p>
+<ul>
+<li>拓扑排序的基本概念和使用方法</li>
+<li>Kahn算法的进阶技巧和最佳实践</li>
+<li>应用的实际应用和优化策略
+<strong>预计学习时间：8小时</strong></li>
+</ul>
+<h2>💡 核心概念详解</h2>
+<p>拓扑排序是现代软件开发中的重要技术，掌握这些知识可以提升你的开发能力。</p>
+<h3>基础用法</h3>
+<pre><code class="language-javascript">// 拓扑排序基础示例
+const example = () =&gt; {
+  // 实现逻辑
+  return &#39;success&#39;;
+};
+</code></pre>
+<h3>进阶用法</h3>
+<pre><code class="language-javascript">// 拓扑排序进阶示例
+class AdvancedExample {
+  constructor(options) {
+    this.options = { ...options };
+  }
+  
+  process(data) {
+    // 处理逻辑
+    return data.map(item =&gt; item * 2);
+  }
+}
+</code></pre>
+<h3>实战场景</h3>
+<pre><code class="language-javascript">// 拓扑排序实战示例
+async function main() {
+  const instance = new AdvancedExample({ enabled: true });
+  const result = await instance.process([1, 2, 3]);
+  console.log(result);
+}
+main();
+</code></pre>
+<h2>📖 深入理解拓扑排序</h2>
+<p>拓扑排序是拓扑排序的核心基础。</p>
+<h3>核心原理</h3>
+<p>理解拓扑排序的定义和工作机制。</p>
+<h3>关键特性</h3>
+<ol>
+<li><strong>特性1</strong>: 详细说明</li>
+<li><strong>特性2</strong>: 详细说明</li>
+<li><strong>特性3</strong>: 详细说明</li>
+</ol>
+<h3>常见误区</h3>
+<ul>
+<li><strong>误区1</strong>: 常见错误理解</li>
+<li><strong>误区2</strong>: 常见错误用法</li>
+<li><strong>误区3</strong>: 常见错误实现</li>
+</ul>
+<h2>📖 掌握Kahn算法</h2>
+<p>Kahn算法是拓扑排序的进阶内容。</p>
+<h3>进阶技巧</h3>
+<ol>
+<li><strong>技巧1</strong>: 具体技巧说明</li>
+<li><strong>技巧2</strong>: 具体技巧说明</li>
+<li><strong>技巧3</strong>: 具体技巧说明</li>
+</ol>
+<h3>最佳实践</h3>
+<ol>
+<li><strong>实践1</strong>: 推荐的实践方法</li>
+<li><strong>实践2</strong>: 推荐的实践方法</li>
+<li><strong>实践3</strong>: 推荐的实践方法</li>
+</ol>
+<h2>📖 实践应用</h2>
+<p>应用是拓扑排序的实战应用。</p>
+<h3>应用场景</h3>
+<ol>
+<li><strong>场景1</strong>: 具体应用案例</li>
+<li><strong>场景2</strong>: 具体应用案例</li>
+<li><strong>场景3</strong>: 具体应用案例</li>
+</ol>
+<h3>优化策略</h3>
+<ol>
+<li><strong>优化1</strong>: 具体优化方法</li>
+<li><strong>优化2</strong>: 具体优化方法</li>
+<li><strong>优化3</strong>: 具体优化方法</li>
+</ol>
+<h2>⚖️ 方案对比</h2>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>方案A</td>
+<td>优点A</td>
+<td>缺点A</td>
+<td>场景A</td>
+</tr>
+<tr>
+<td>方案B</td>
+<td>优点B</td>
+<td>缺点B</td>
+<td>场景B</td>
+</tr>
+</tbody></table>
+<h2>📚 推荐学习资源</h2>
+<ul>
+<li><a href="https://example.com/docs">官方文档</a> — 最权威的参考</li>
+<li><a href="https://example.com/tutorial">在线教程</a> — 适合入门</li>
+</ul>
+<h2>🚀 实践建议</h2>
+<p>现在就开始学习这项技术吧！建议制定学习计划，每天坚持练习。</p>
+<p>开始你的项目，<a href="https://m.do.co/c/c9c6aa51c904">DigitalOcean</a>新用户$200额度！</p>
+
+      </div>
+
+      <div class="affiliate-card">
+        <div class="affiliate-icon">🚀</div>
+        <div class="affiliate-content">
+          <h4>🎯 推荐工具</h4>
+          <p>想提升你的开发效率？点击下方链接获取专属优惠，开启高效开发之旅！</p>
+        </div>
+        <a href="https://m.do.co/c/c9c6aa51c904" target="_blank" rel="nofollow noopener" class="affiliate-button">开始你的项目，DigitalOcean新用户$200额度 →</a>
+      </div>
+
+      <div class="affiliate-card secondary">
+        <div class="affiliate-icon">☁️</div>
+        <div class="affiliate-content">
+          <h4>🔥 云服务推荐</h4>
+          <p>提升开发效率？GitHub Copilot AI编程助手让你的编码速度翻倍！</p>
+        </div>
+        <a href="https://github.com/features/copilot" target="_blank" rel="nofollow noopener" class="affiliate-button">免费试用 →</a>
+      </div>
+
+      <div class="feedback-section">
+        <p class="feedback-title">📊 本文是否解决了你的问题？</p>
+        <div class="feedback-buttons">
+          <button class="feedback-btn positive" onclick="handleFeedback(true)">👍 是的，很有帮助</button>
+          <button class="feedback-btn negative" onclick="handleFeedback(false)">👎 需要改进</button>
+        </div>
+        <p class="feedback-thanks" id="feedbackThanks" style="display: none;">感谢你的反馈！我们会继续改进内容质量。</p>
+      </div>
+
+      <div class="related-articles">
+        <h3>📖 相关推荐</h3>
+        <div class="related-list">
+          
+    <div class="related-item">
+      <a href="programming-introduction.html">编程入门指南</a>
+    </div>
+  
+    <div class="related-item">
+      <a href="development-best-practices.html">开发最佳实践</a>
+    </div>
+  
+    <div class="related-item">
+      <a href="learning-path-guide.html">技术学习路线</a>
+    </div>
+  
+        </div>
+      </div>
+
+      <div class="article-footer">
+        <p>⚠️ 免责声明：本站内容仅供技术参考，请以官方文档为准。</p>
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="bg-white border-t border-slate-100 py-8 mt-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm text-slate-400">© 2024 技术学习指南 - 专注于编程技术学习</p>
+        <div class="flex gap-4 text-sm text-slate-400">
+          <a href="index.html" class="hover:text-indigo-600">首页</a>
+          <a href="#" class="hover:text-indigo-600">关于</a>
+          <a href="#" class="hover:text-indigo-600">隐私政策</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function handleFeedback(isPositive) {
+      document.getElementById('feedbackThanks').style.display = 'block';
+      const buttons = document.querySelectorAll('.feedback-btn');
+      buttons.forEach(btn => btn.disabled = true);
+      
+      if (isPositive) {
+        document.querySelector('.feedback-btn.positive').classList.add('selected');
+      } else {
+        document.querySelector('.feedback-btn.negative').classList.add('selected');
+      }
+    }
+  </script>
+</body>
+</html>

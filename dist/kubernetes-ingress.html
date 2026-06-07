@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="本文深入讲解KubernetesIngress配置，包含Ingress Controller、路径规则和TLS，附带3个可运行代码示例。">
+  <meta name="keywords" content="编程,技术,教程,学习,Python,JavaScript,React,Node.js">
+  <meta name="author" content="技术学习指南">
+  <title>KubernetesIngress配置 - 技术学习指南</title>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://pseobuilder.net/kubernetes-ingress.html" />
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="KubernetesIngress配置 - 技术学习指南" />
+  <meta property="og:description" content="本文深入讲解KubernetesIngress配置，包含Ingress Controller、路径规则和TLS，附带3个可运行代码示例。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://pseobuilder.net/kubernetes-ingress.html" />
+  <meta property="og:site_name" content="技术学习指南" />
+  <meta property="og:locale" content="zh_CN" />
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="KubernetesIngress配置 - 技术学习指南" />
+  <meta name="twitter:description" content="本文深入讲解KubernetesIngress配置，包含Ingress Controller、路径规则和TLS，附带3个可运行代码示例。" />
+  <meta name="twitter:site" content="@TechGuide" />
+  
+  <!-- Schema.org Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "首页",
+            "item": "https://pseobuilder.net/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "技术教程",
+            "item": "https://pseobuilder.net/#categories"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "KubernetesIngress配置",
+            "item": "https://pseobuilder.net/kubernetes-ingress.html"
+          }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "#article",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://pseobuilder.net/kubernetes-ingress.html"
+        },
+        "headline": "KubernetesIngress配置",
+        "description": "本文深入讲解KubernetesIngress配置，包含Ingress Controller、路径规则和TLS，附带3个可运行代码示例。",
+        "author": {
+          "@type": "Person",
+          "name": "技术专家"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "技术学习指南",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://pseobuilder.net/favicon.svg"
+          }
+        },
+        "datePublished": "2026-05-30",
+        "dateModified": "2026-05-30",
+        "articleSection": "技术教程",
+        "keywords": ["编程", "技术", "教程", "学习"]
+      }
+    ]
+  }
+  </script>
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>" type="image/svg+xml">
+</head>
+<body class="bg-slate-50">
+  <nav class="bg-white border-b border-slate-100 py-4 px-6 sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto flex justify-between items-center">
+      <a href="index.html" class="font-bold text-slate-900 flex items-center gap-2 text-lg">
+        <span class="p-1.5 bg-indigo-600 text-white rounded-lg text-xs">AI</span> 技术学习指南
+      </a>
+      <a href="index.html" class="text-sm text-indigo-600 font-medium hover:underline">← 返回首页</a>
+    </div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <article class="article-card">
+      
+      <div class="breadcrumbs">
+        <a href="index.html">首页</a>
+        <span>/</span>
+        <a href="index.html#categories">技术教程</a>
+        <span>/</span>
+        <span class="text-indigo-600 font-medium">KubernetesIngress配置</span>
+      </div>
+
+      <div class="article-header">
+        <div class="author-badge">
+          <span class="author-avatar">👨‍💻</span>
+          <span class="author-info">
+            <span class="author-name">技术专家</span>
+            <span class="author-title">资深开发者</span>
+          </span>
+          <span class="update-badge">最后更新于 2026-05-30</span>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-3 mt-4">
+          <span class="article-tag">技术</span><span class="article-tag">编程</span><span class="article-tag">开发</span>
+        </div>
+        <h1 class="article-title">KubernetesIngress配置</h1>
+        <div class="article-meta">
+          <span>📅 更新时间：2026-05-30</span>
+          <span>•</span>
+          <span>⏱️ 预计阅读时间 8 分钟</span>
+          <span>•</span>
+          <span>📚 10K+ 字深度好文</span>
+        </div>
+      </div>
+
+      <div class="article-content">
+        <h2>🎯 学习目标</h2>
+<p>通过本文，你将深入理解KubernetesIngress配置的核心原理和实践应用，掌握以下关键技能：</p>
+<ul>
+<li>Ingress Controller的基本概念和工作机制</li>
+<li>路径规则的进阶技巧和最佳实践</li>
+<li>TLS的实际应用和性能优化
+<strong>预计学习时间：12小时</strong></li>
+</ul>
+<h2>💡 核心概念详解</h2>
+<p>KubernetesIngress配置是DevOps领域的关键技术，掌握这些知识可以实现自动化部署和运维。</p>
+<h3>基础用法</h3>
+<pre><code class="language-dockerfile"># KubernetesIngress配置基础示例 - Dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+EXPOSE 3000
+CMD [&quot;node&quot;, &quot;server.js&quot;]
+</code></pre>
+<h3>进阶用法</h3>
+<pre><code class="language-yaml"># KubernetesIngress配置进阶示例 - docker-compose.yml
+version: &#39;3.8&#39;
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - &quot;3000:3000&quot;
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgres://db:5432/myapp
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+
+  db:
+    image: postgres:15
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=myapp
+      - POSTGRES_PASSWORD=secret
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+
+volumes:
+  postgres-data:
+  redis-data:
+</code></pre>
+<h3>实战场景</h3>
+<pre><code class="language-yaml"># KubernetesIngress配置实战示例 - Kubernetes Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+  labels:
+    app: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app
+        image: my-app:latest
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: &quot;128Mi&quot;
+            cpu: &quot;250m&quot;
+          limits:
+            memory: &quot;256Mi&quot;
+            cpu: &quot;500m&quot;
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 3
+</code></pre>
+<h2>📖 深入理解Ingress Controller</h2>
+<p>Ingress Controller是容器化的核心基础。</p>
+<h3>核心原理</h3>
+<p>Docker使用容器打包应用及其依赖，实现环境一致性。</p>
+<h3>关键特性</h3>
+<ol>
+<li><strong>镜像</strong>: 只读的应用模板</li>
+<li><strong>容器</strong>: 镜像的运行实例</li>
+<li><strong>Dockerfile</strong>: 镜像构建配置</li>
+<li><strong>Docker Compose</strong>: 多容器编排</li>
+</ol>
+<h3>常见误区</h3>
+<ul>
+<li><strong>镜像过大</strong>: 未优化的镜像会占用大量空间</li>
+<li><strong>以root运行</strong>: 安全风险</li>
+<li><strong>缺少健康检查</strong>: 无法自动恢复故障容器</li>
+</ul>
+<h2>📖 掌握路径规则</h2>
+<p>路径规则是Kubernetes的核心概念。</p>
+<h3>Pod管理</h3>
+<ol>
+<li><strong>Pod定义</strong>: 最小部署单元</li>
+<li><strong>Pod生命周期</strong>: 创建、运行、终止</li>
+<li><strong>Pod调度</strong>: 节点选择和调度策略</li>
+</ol>
+<h3>Service配置</h3>
+<ol>
+<li><strong>ClusterIP</strong>: 集群内部访问</li>
+<li><strong>NodePort</strong>: 节点端口暴露</li>
+<li><strong>LoadBalancer</strong>: 外部负载均衡</li>
+</ol>
+<h2>📖 实践TLS</h2>
+<p>TLS涵盖了CI/CD的最佳实践。</p>
+<h3>CI/CD流程</h3>
+<ol>
+<li><strong>代码提交</strong>: 触发CI流程</li>
+<li><strong>自动化测试</strong>: 运行单元测试和集成测试</li>
+<li><strong>构建镜像</strong>: 构建Docker镜像</li>
+<li><strong>部署</strong>: 部署到Kubernetes集群</li>
+</ol>
+<h3>工具选择</h3>
+<ol>
+<li><strong>Jenkins</strong>: 老牌CI/CD工具</li>
+<li><strong>GitLab CI</strong>: 集成在GitLab中</li>
+<li><strong>GitHub Actions</strong>: GitHub原生支持</li>
+</ol>
+<h2>⚖️ 方案对比</h2>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Docker</td>
+<td>轻量灵活</td>
+<td>隔离有限</td>
+<td>微服务</td>
+</tr>
+<tr>
+<td>虚拟机</td>
+<td>隔离性强</td>
+<td>资源占用大</td>
+<td>需要完全隔离</td>
+</tr>
+</tbody></table>
+<h2>📚 推荐学习资源</h2>
+<ul>
+<li><a href="https://docs.docker.com/">Docker官方文档</a> — 官方指南</li>
+<li><a href="https://kubernetes.io/docs/">Kubernetes Docs</a> — K8s文档</li>
+<li><a href="https://www.jenkins.io/doc/">Jenkins文档</a> — CI/CD指南</li>
+</ul>
+<h2>🚀 实践建议</h2>
+<p>部署Docker和Kubernetes应用，<a href="https://www.vultr.com/?ref=9903747">Vultr</a>高性能云服务器是你的最佳选择！</p>
+
+      </div>
+
+      <div class="affiliate-card">
+        <div class="affiliate-icon">🚀</div>
+        <div class="affiliate-content">
+          <h4>🎯 推荐工具</h4>
+          <p>想提升你的开发效率？点击下方链接获取专属优惠，开启高效开发之旅！</p>
+        </div>
+        <a href="https://www.vultr.com/?ref=9903747" target="_blank" rel="nofollow noopener" class="affiliate-button">K8s集群部署，Vultr云主机优惠 →</a>
+      </div>
+
+      <div class="affiliate-card secondary">
+        <div class="affiliate-icon">☁️</div>
+        <div class="affiliate-content">
+          <h4>🔥 云服务推荐</h4>
+          <p>提升开发效率？GitHub Copilot AI编程助手让你的编码速度翻倍！</p>
+        </div>
+        <a href="https://github.com/features/copilot" target="_blank" rel="nofollow noopener" class="affiliate-button">免费试用 →</a>
+      </div>
+
+      <div class="feedback-section">
+        <p class="feedback-title">📊 本文是否解决了你的问题？</p>
+        <div class="feedback-buttons">
+          <button class="feedback-btn positive" onclick="handleFeedback(true)">👍 是的，很有帮助</button>
+          <button class="feedback-btn negative" onclick="handleFeedback(false)">👎 需要改进</button>
+        </div>
+        <p class="feedback-thanks" id="feedbackThanks" style="display: none;">感谢你的反馈！我们会继续改进内容质量。</p>
+      </div>
+
+      <div class="related-articles">
+        <h3>📖 相关推荐</h3>
+        <div class="related-list">
+          
+    <div class="related-item">
+      <a href="programming-introduction.html">编程入门指南</a>
+    </div>
+  
+    <div class="related-item">
+      <a href="development-best-practices.html">开发最佳实践</a>
+    </div>
+  
+    <div class="related-item">
+      <a href="learning-path-guide.html">技术学习路线</a>
+    </div>
+  
+        </div>
+      </div>
+
+      <div class="article-footer">
+        <p>⚠️ 免责声明：本站内容仅供技术参考，请以官方文档为准。</p>
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="bg-white border-t border-slate-100 py-8 mt-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm text-slate-400">© 2024 技术学习指南 - 专注于编程技术学习</p>
+        <div class="flex gap-4 text-sm text-slate-400">
+          <a href="index.html" class="hover:text-indigo-600">首页</a>
+          <a href="#" class="hover:text-indigo-600">关于</a>
+          <a href="#" class="hover:text-indigo-600">隐私政策</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function handleFeedback(isPositive) {
+      document.getElementById('feedbackThanks').style.display = 'block';
+      const buttons = document.querySelectorAll('.feedback-btn');
+      buttons.forEach(btn => btn.disabled = true);
+      
+      if (isPositive) {
+        document.querySelector('.feedback-btn.positive').classList.add('selected');
+      } else {
+        document.querySelector('.feedback-btn.negative').classList.add('selected');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="本文深入讲解Linux进程管理，包含ps、top和kill，附带3个可运行代码示例。">
+  <meta name="keywords" content="编程,技术,教程,学习,Python,JavaScript,React,Node.js">
+  <meta name="author" content="技术学习指南">
+  <title>Linux进程管理 - 技术学习指南</title>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://pseobuilder.net/linux-process-management.html" />
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Linux进程管理 - 技术学习指南" />
+  <meta property="og:description" content="本文深入讲解Linux进程管理，包含ps、top和kill，附带3个可运行代码示例。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://pseobuilder.net/linux-process-management.html" />
+  <meta property="og:site_name" content="技术学习指南" />
+  <meta property="og:locale" content="zh_CN" />
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Linux进程管理 - 技术学习指南" />
+  <meta name="twitter:description" content="本文深入讲解Linux进程管理，包含ps、top和kill，附带3个可运行代码示例。" />
+  <meta name="twitter:site" content="@TechGuide" />
+  
+  <!-- Schema.org Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "首页",
+            "item": "https://pseobuilder.net/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "技术教程",
+            "item": "https://pseobuilder.net/#categories"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Linux进程管理",
+            "item": "https://pseobuilder.net/linux-process-management.html"
+          }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "#article",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://pseobuilder.net/linux-process-management.html"
+        },
+        "headline": "Linux进程管理",
+        "description": "本文深入讲解Linux进程管理，包含ps、top和kill，附带3个可运行代码示例。",
+        "author": {
+          "@type": "Person",
+          "name": "技术专家"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "技术学习指南",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://pseobuilder.net/favicon.svg"
+          }
+        },
+        "datePublished": "2026-05-30",
+        "dateModified": "2026-05-30",
+        "articleSection": "技术教程",
+        "keywords": ["编程", "技术", "教程", "学习"]
+      }
+    ]
+  }
+  </script>
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>" type="image/svg+xml">
+</head>
+<body class="bg-slate-50">
+  <nav class="bg-white border-b border-slate-100 py-4 px-6 sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto flex justify-between items-center">
+      <a href="index.html" class="font-bold text-slate-900 flex items-center gap-2 text-lg">
+        <span class="p-1.5 bg-indigo-600 text-white rounded-lg text-xs">AI</span> 技术学习指南
+      </a>
+      <a href="index.html" class="text-sm text-indigo-600 font-medium hover:underline">← 返回首页</a>
+    </div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <article class="article-card">
+      
+      <div class="breadcrumbs">
+        <a href="index.html">首页</a>
+        <span>/</span>
+        <a href="index.html#categories">技术教程</a>
+        <span>/</span>
+        <span class="text-indigo-600 font-medium">Linux进程管理</span>
+      </div>
+
+      <div class="article-header">
+        <div class="author-badge">
+          <span class="author-avatar">👨‍💻</span>
+          <span class="author-info">
+            <span class="author-name">技术专家</span>
+            <span class="author-title">资深开发者</span>
+          </span>
+          <span class="update-badge">最后更新于 2026-05-30</span>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-3 mt-4">
+          <span class="article-tag">技术</span><span class="article-tag">编程</span><span class="article-tag">开发</span>
+        </div>
+        <h1 class="article-title">Linux进程管理</h1>
+        <div class="article-meta">
+          <span>📅 更新时间：2026-05-30</span>
+          <span>•</span>
+          <span>⏱️ 预计阅读时间 8 分钟</span>
+          <span>•</span>
+          <span>📚 10K+ 字深度好文</span>
+        </div>
+      </div>
+
+      <div class="article-content">
+        <h2>🎯 学习目标</h2>
+<p>通过本文，你将深入理解Linux进程管理的核心用法和最佳实践。</p>
+<ul>
+<li>ps的基本概念和使用技巧</li>
+<li>top的进阶配置和优化</li>
+<li>kill的实际应用和效率提升
+<strong>预计学习时间：8小时</strong></li>
+</ul>
+<h2>💡 核心概念详解</h2>
+<p>Linux进程管理是开发工作中的必备工具，掌握这些技能可以大幅提升工作效率。</p>
+<h3>基础用法</h3>
+<pre><code class="language-bash"># Linux进程管理基础示例
+git init
+git add .
+git commit -m &quot;Initial commit&quot;
+git remote add origin https://github.com/user/repo.git
+git push -u origin main
+</code></pre>
+<h3>进阶用法</h3>
+<pre><code class="language-bash"># Linux进程管理进阶示例
+git config --global user.name &quot;Your Name&quot;
+git config --global user.email &quot;your@email.com&quot;
+git config --global alias.co checkout
+git config --global alias.ci commit
+git config --global alias.st status
+git config --global core.editor vim
+
+# 创建git钩子
+cat &gt; .git/hooks/pre-commit &lt;&lt; &#39;EOF&#39;
+#!/bin/sh
+npm test
+EOF
+chmod +x .git/hooks/pre-commit
+</code></pre>
+<h3>实战场景</h3>
+<pre><code class="language-bash"># Linux进程管理实战示例 - Git工作流
+git checkout -b feature/new-feature
+git add .
+git commit -m &quot;feat: implement new feature&quot;
+
+# 同步主分支
+git checkout main
+git pull origin main
+git checkout feature/new-feature
+git merge main --no-ff
+
+# 解决冲突后
+git add .
+git commit -m &quot;merge: resolve conflicts&quot;
+git push origin feature/new-feature
+</code></pre>
+<h2>📖 深入理解ps</h2>
+<p>ps是Linux进程管理的核心功能。</p>
+<h3>核心原理</h3>
+<p>理解ps的工作机制和使用场景。</p>
+<h3>关键命令</h3>
+<ol>
+<li><strong>命令1</strong>: 功能说明</li>
+<li><strong>命令2</strong>: 功能说明</li>
+<li><strong>命令3</strong>: 功能说明</li>
+</ol>
+<h3>常见误区</h3>
+<ul>
+<li><strong>错误用法</strong>: 常见的错误操作</li>
+<li><strong>最佳实践</strong>: 推荐的使用方式</li>
+<li><strong>效率技巧</strong>: 提升效率的小技巧</li>
+</ul>
+<h2>📖 掌握top</h2>
+<p>top是Linux进程管理的进阶配置。</p>
+<h3>配置优化</h3>
+<ol>
+<li><strong>全局配置</strong>: 用户级别的配置</li>
+<li><strong>项目配置</strong>: 项目级别的配置</li>
+<li><strong>条件配置</strong>: 针对不同场景的配置</li>
+</ol>
+<h3>高级技巧</h3>
+<ol>
+<li><strong>别名设置</strong>: 创建常用命令别名</li>
+<li><strong>钩子配置</strong>: 使用git hooks自动化</li>
+<li><strong>工作流配置</strong>: 团队协作的最佳实践</li>
+</ol>
+<h2>📖 实践kill</h2>
+<p>kill是Linux进程管理的实际应用。</p>
+<h3>团队协作</h3>
+<ol>
+<li><strong>代码审查</strong>: 规范的code review流程</li>
+<li><strong>分支管理</strong>: 合理的分支策略</li>
+<li><strong>冲突解决</strong>: 高效解决代码冲突</li>
+</ol>
+<h3>效率提升</h3>
+<ol>
+<li><strong>快捷键</strong>: 常用快捷键</li>
+<li><strong>脚本编写</strong>: 自动化脚本</li>
+<li><strong>工具集成</strong>: 与其他工具的集成</li>
+</ol>
+<h2>⚖️ 方案对比</h2>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Git</td>
+<td>分布式</td>
+<td>学习曲线</td>
+<td>团队协作</td>
+</tr>
+<tr>
+<td>SVN</td>
+<td>集中式</td>
+<td>单点故障</td>
+<td>小型项目</td>
+</tr>
+</tbody></table>
+<h2>📚 推荐学习资源</h2>
+<ul>
+<li><a href="https://git-scm.com/docs">Git官方文档</a> — 官方参考</li>
+<li><a href="https://git-scm.com/book/zh/v2">Pro Git</a> — 经典书籍</li>
+<li><a href="https://linuxcommand.org/">Linux命令行大全</a> — Linux教程</li>
+</ul>
+<h2>🚀 实践建议</h2>
+<p>通过日常使用来巩固这些工具的用法，建议设置别名和脚本提升效率。</p>
+<p>代码托管首选<a href="https://github.com/">GitHub</a>，全球最大的开发者社区！</p>
+
+      </div>
+
+      <div class="affiliate-card">
+        <div class="affiliate-icon">🚀</div>
+        <div class="affiliate-content">
+          <h4>🎯 推荐工具</h4>
+          <p>想提升你的开发效率？点击下方链接获取专属优惠，开启高效开发之旅！</p>
+        </div>
+        <a href="https://m.do.co/c/c9c6aa51c904" target="_blank" rel="nofollow noopener" class="affiliate-button">开始你的项目，DigitalOcean新用户$200额度 →</a>
+      </div>
+
+      <div class="affiliate-card secondary">
+        <div class="affiliate-icon">☁️</div>
+        <div class="affiliate-content">
+          <h4>🔥 云服务推荐</h4>
+          <p>提升开发效率？GitHub Copilot AI编程助手让你的编码速度翻倍！</p>
+        </div>
+        <a href="https://github.com/features/copilot" target="_blank" rel="nofollow noopener" class="affiliate-button">免费试用 →</a>
+      </div>
+
+      <div class="feedback-section">
+        <p class="feedback-title">📊 本文是否解决了你的问题？</p>
+        <div class="feedback-buttons">
+          <button class="feedback-btn positive" onclick="handleFeedback(true)">👍 是的，很有帮助</button>
+          <button class="feedback-btn negative" onclick="handleFeedback(false)">👎 需要改进</button>
+        </div>
+        <p class="feedback-thanks" id="feedbackThanks" style="display: none;">感谢你的反馈！我们会继续改进内容质量。</p>
+      </div>
+
+      <div class="related-articles">
+        <h3>📖 相关推荐</h3>
+        <div class="related-list">
+          
+    <div class="related-item">
+      <a href="shell-scripting-guide.html">Shell脚本编程</a>
+    </div>
+  
+    <div class="related-item">
+      <a href="server-administration-basics.html">服务器运维基础</a>
+    </div>
+  
+    <div class="related-item">
+      <a href="nginx-configuration-guide.html">Nginx配置详解</a>
+    </div>
+  
+        </div>
+      </div>
+
+      <div class="article-footer">
+        <p>⚠️ 免责声明：本站内容仅供技术参考，请以官方文档为准。</p>
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="bg-white border-t border-slate-100 py-8 mt-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm text-slate-400">© 2024 技术学习指南 - 专注于编程技术学习</p>
+        <div class="flex gap-4 text-sm text-slate-400">
+          <a href="index.html" class="hover:text-indigo-600">首页</a>
+          <a href="#" class="hover:text-indigo-600">关于</a>
+          <a href="#" class="hover:text-indigo-600">隐私政策</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function handleFeedback(isPositive) {
+      document.getElementById('feedbackThanks').style.display = 'block';
+      const buttons = document.querySelectorAll('.feedback-btn');
+      buttons.forEach(btn => btn.disabled = true);
+      
+      if (isPositive) {
+        document.querySelector('.feedback-btn.positive').classList.add('selected');
+      } else {
+        document.querySelector('.feedback-btn.negative').classList.add('selected');
+      }
+    }
+  </script>
+</body>
+</html>

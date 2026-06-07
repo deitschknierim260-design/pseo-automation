@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="本文深入讲解JavaScript类与继承，包含class语法、extends和super调用，附带3个可运行代码示例。">
+  <meta name="keywords" content="编程,技术,教程,学习,Python,JavaScript,React,Node.js">
+  <meta name="author" content="技术学习指南">
+  <title>JavaScript类与继承 - 技术学习指南</title>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://pseobuilder.net/javascript-classes-inheritance.html" />
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="JavaScript类与继承 - 技术学习指南" />
+  <meta property="og:description" content="本文深入讲解JavaScript类与继承，包含class语法、extends和super调用，附带3个可运行代码示例。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://pseobuilder.net/javascript-classes-inheritance.html" />
+  <meta property="og:site_name" content="技术学习指南" />
+  <meta property="og:locale" content="zh_CN" />
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="JavaScript类与继承 - 技术学习指南" />
+  <meta name="twitter:description" content="本文深入讲解JavaScript类与继承，包含class语法、extends和super调用，附带3个可运行代码示例。" />
+  <meta name="twitter:site" content="@TechGuide" />
+  
+  <!-- Schema.org Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "首页",
+            "item": "https://pseobuilder.net/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "技术教程",
+            "item": "https://pseobuilder.net/#categories"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "JavaScript类与继承",
+            "item": "https://pseobuilder.net/javascript-classes-inheritance.html"
+          }
+        ]
+      },
+      {
+        "@type": "Article",
+        "@id": "#article",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://pseobuilder.net/javascript-classes-inheritance.html"
+        },
+        "headline": "JavaScript类与继承",
+        "description": "本文深入讲解JavaScript类与继承，包含class语法、extends和super调用，附带3个可运行代码示例。",
+        "author": {
+          "@type": "Person",
+          "name": "技术专家"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "技术学习指南",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://pseobuilder.net/favicon.svg"
+          }
+        },
+        "datePublished": "2026-05-30",
+        "dateModified": "2026-05-30",
+        "articleSection": "技术教程",
+        "keywords": ["编程", "技术", "教程", "学习"]
+      }
+    ]
+  }
+  </script>
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>" type="image/svg+xml">
+</head>
+<body class="bg-slate-50">
+  <nav class="bg-white border-b border-slate-100 py-4 px-6 sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto flex justify-between items-center">
+      <a href="index.html" class="font-bold text-slate-900 flex items-center gap-2 text-lg">
+        <span class="p-1.5 bg-indigo-600 text-white rounded-lg text-xs">AI</span> 技术学习指南
+      </a>
+      <a href="index.html" class="text-sm text-indigo-600 font-medium hover:underline">← 返回首页</a>
+    </div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <article class="article-card">
+      
+      <div class="breadcrumbs">
+        <a href="index.html">首页</a>
+        <span>/</span>
+        <a href="index.html#categories">技术教程</a>
+        <span>/</span>
+        <span class="text-indigo-600 font-medium">JavaScript类与继承</span>
+      </div>
+
+      <div class="article-header">
+        <div class="author-badge">
+          <span class="author-avatar">👨‍💻</span>
+          <span class="author-info">
+            <span class="author-name">技术专家</span>
+            <span class="author-title">资深开发者</span>
+          </span>
+          <span class="update-badge">最后更新于 2026-05-30</span>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-3 mt-4">
+          <span class="article-tag">技术</span><span class="article-tag">编程</span><span class="article-tag">开发</span>
+        </div>
+        <h1 class="article-title">JavaScript类与继承</h1>
+        <div class="article-meta">
+          <span>📅 更新时间：2026-05-30</span>
+          <span>•</span>
+          <span>⏱️ 预计阅读时间 8 分钟</span>
+          <span>•</span>
+          <span>📚 10K+ 字深度好文</span>
+        </div>
+      </div>
+
+      <div class="article-content">
+        <h2>🎯 学习目标</h2>
+<p>通过本文，你将深入理解JavaScript类与继承的核心原理和实践应用，掌握以下关键技能：</p>
+<ul>
+<li>class语法的基本概念和工作机制</li>
+<li>extends的进阶技巧和最佳实践</li>
+<li>super调用的实际应用和性能优化
+<strong>预计学习时间：12小时</strong></li>
+</ul>
+<h2>💡 核心概念详解</h2>
+<p>JavaScript类与继承是JavaScript开发中的关键知识，对于编写高质量、高性能的代码至关重要。本章节将从基础概念入手，逐步深入到高级应用场景。</p>
+<h3>基础用法</h3>
+<pre><code class="language-javascript">// JavaScript类与继承基础示例
+async function fetchUserData(userId) {
+  const response = await fetch(`/api/users/${userId}`);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return response.json();
+}
+
+// 使用示例
+async function displayUser(userId) {
+  try {
+    const user = await fetchUserData(userId);
+    console.log(`User: ${user.name}`);
+  } catch (error) {
+    console.error(&#39;Failed to fetch user:&#39;, error);
+  }
+}
+
+displayUser(1);
+</code></pre>
+<h3>进阶用法</h3>
+<pre><code class="language-javascript">// JavaScript类与继承进阶示例
+class DataFetcher {
+  constructor(baseUrl) {
+    this.baseUrl = baseUrl;
+    this.cache = new Map();
+    this.defaultTimeout = 30000;
+  }
+
+  async fetchWithCache(endpoint, options = {}) {
+    const cacheKey = `${endpoint}:${JSON.stringify(options)}`;
+    
+    if (this.cache.has(cacheKey)) {
+      return this.cache.get(cacheKey);
+    }
+
+    const url = `${this.baseUrl}${endpoint}`;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() =&gt; controller.abort(), this.defaultTimeout);
+
+    try {
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal
+      });
+
+      if (!response.ok) {
+        throw new Error(`Request failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      this.cache.set(cacheKey, data);
+      
+      return data;
+    } catch (error) {
+      if (error.name === &#39;AbortError&#39;) {
+        throw new Error(&#39;Request timeout&#39;);
+      }
+      throw error;
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+
+  async fetchMultiple(endpoints) {
+    const promises = endpoints.map(endpoint =&gt; 
+      this.fetchWithCache(endpoint)
+        .catch(error =&gt; ({ error, endpoint }))
+    );
+    
+    return Promise.all(promises);
+  }
+}
+
+// 使用示例
+const fetcher = new DataFetcher(&#39;https://api.example.com&#39;);
+
+async function loadDashboard() {
+  const results = await fetcher.fetchMultiple([
+    &#39;/user/profile&#39;,
+    &#39;/user/activity&#39;,
+    &#39;/notifications&#39;
+  ]);
+  
+  results.forEach(result =&gt; {
+    if (result.error) {
+      console.error(`Failed to load ${result.endpoint}:`, result.error);
+    } else {
+      console.log(`Loaded ${result.endpoint}:`, result);
+    }
+  });
+}
+
+loadDashboard();
+</code></pre>
+<h3>实战场景</h3>
+<pre><code class="language-javascript">// JavaScript类与继承实战示例 - 复杂状态管理
+class AsyncStateManager {
+  constructor(initialState = {}) {
+    this.state = { ...initialState };
+    this.listeners = new Set();
+    this.pendingUpdates = new Map();
+  }
+
+  subscribe(listener) {
+    this.listeners.add(listener);
+    return () =&gt; this.listeners.delete(listener);
+  }
+
+  notify() {
+    this.listeners.forEach(listener =&gt; listener({ ...this.state }));
+  }
+
+  async updateState(key, asyncFn) {
+    if (this.pendingUpdates.has(key)) {
+      return this.pendingUpdates.get(key);
+    }
+
+    const promise = (async () =&gt; {
+      try {
+        const result = await asyncFn();
+        this.state[key] = result;
+        this.notify();
+        return result;
+      } finally {
+        this.pendingUpdates.delete(key);
+      }
+    })();
+
+    this.pendingUpdates.set(key, promise);
+    return promise;
+  }
+
+  async fetchAndUpdate(key, url, options = {}) {
+    return this.updateState(key, async () =&gt; {
+      const response = await fetch(url, {
+        method: &#39;GET&#39;,
+        ...options
+      });
+      return response.json();
+    });
+  }
+}
+
+// 使用示例
+const stateManager = new AsyncStateManager({ user: null, posts: [] });
+
+const unsubscribe = stateManager.subscribe((state) =&gt; {
+  console.log(&#39;State updated:&#39;, state);
+});
+
+// 并行更新多个状态
+Promise.all([
+  stateManager.fetchAndUpdate(&#39;user&#39;, &#39;/api/user&#39;),
+  stateManager.fetchAndUpdate(&#39;posts&#39;, &#39;/api/posts&#39;)
+]).then(() =&gt; {
+  console.log(&#39;All data loaded&#39;);
+  unsubscribe();
+});
+</code></pre>
+<h2>📖 深入理解class语法</h2>
+<p>class语法是JavaScript类与继承的核心基础，理解它对于掌握JavaScript异步编程至关重要。</p>
+<h3>核心原理</h3>
+<p>class语法是JavaScript运行时的核心机制，负责执行代码、收集和处理事件、执行队列中的子任务。</p>
+<h3>关键特性</h3>
+<ol>
+<li><strong>调用栈</strong>: 执行当前执行上下文的代码</li>
+<li><strong>任务队列</strong>: 存放异步操作完成后的回调函数</li>
+<li><strong>微任务队列</strong>: 存放Promise回调等微任务</li>
+<li><strong>执行顺序</strong>: 先执行同步代码，再处理微任务，最后处理宏任务</li>
+</ol>
+<h3>常见误区</h3>
+<ul>
+<li><strong>宏任务和微任务混淆</strong>: Promise.then是微任务，setTimeout是宏任务</li>
+<li><strong>执行顺序误解</strong>: 微任务在当前宏任务结束后立即执行</li>
+<li><strong>性能影响</strong>: 过多的微任务会阻塞UI渲染</li>
+</ul>
+<h2>📖 掌握extends</h2>
+<p>extends是在基础异步编程之上的进阶技巧。</p>
+<h3>设计模式</h3>
+<p><strong>1. Promise链式调用</strong></p>
+<pre><code class="language-javascript">fetch(&#39;/api/data&#39;)
+  .then(response =&gt; response.json())
+  .then(data =&gt; processData(data))
+  .catch(error =&gt; handleError(error));
+</code></pre>
+<p><strong>2. 并发执行模式</strong>
+使用Promise.all()并发执行多个异步操作。</p>
+<p><strong>3. 竞争模式</strong>
+使用Promise.race()处理最快完成的操作。</p>
+<h3>性能优化策略</h3>
+<ul>
+<li><strong>请求合并</strong>: 合并多个相似请求</li>
+<li><strong>缓存策略</strong>: 缓存重复请求的结果</li>
+<li><strong>取消请求</strong>: 使用AbortController取消不必要的请求</li>
+</ul>
+<h2>📖 实践super调用</h2>
+<p>super调用涵盖了在实际项目中的应用场景。</p>
+<h3>典型应用场景</h3>
+<ol>
+<li><strong>数据获取</strong>: 从API获取数据并更新UI</li>
+<li><strong>文件上传</strong>: 异步上传文件并显示进度</li>
+<li><strong>WebSocket通信</strong>: 实时数据推送</li>
+<li><strong>动画控制</strong>: 异步动画序列控制</li>
+</ol>
+<h3>生产环境考虑</h3>
+<ol>
+<li><strong>错误边界</strong>: 实现全局错误处理</li>
+<li><strong>加载状态</strong>: 显示加载指示器</li>
+<li><strong>重试机制</strong>: 网络失败时自动重试</li>
+<li><strong>请求限流</strong>: 防止过多并发请求</li>
+</ol>
+<h2>⚖️ 方案对比</h2>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>回调函数</td>
+<td>简单直接</td>
+<td>回调地狱</td>
+<td>简单异步操作</td>
+</tr>
+<tr>
+<td>Promise</td>
+<td>链式调用</td>
+<td>学习曲线</td>
+<td>复杂异步流程</td>
+</tr>
+<tr>
+<td>async/await</td>
+<td>同步写法</td>
+<td>需要ES2017+</td>
+<td>现代项目</td>
+</tr>
+</tbody></table>
+<h2>📚 推荐学习资源</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript">MDN Web Docs</a> — JavaScript官方文档</li>
+<li><a href="https://zh.javascript.info/">JavaScript.info</a> — 现代教程</li>
+<li><a href="https://github.com/getify/You-Dont-Know-JS">You Don&#39;t Know JS</a> — 深入理解JS</li>
+</ul>
+<h2>🚀 实践建议</h2>
+<p>通过实际项目练习异步编程，建议从简单的数据获取开始，逐步实现复杂的异步流程。</p>
+<p>需要AI编程助手提升效率？试试<a href="https://github.com/features/copilot">GitHub Copilot</a>！</p>
+
+      </div>
+
+      <div class="affiliate-card">
+        <div class="affiliate-icon">🚀</div>
+        <div class="affiliate-content">
+          <h4>🎯 推荐工具</h4>
+          <p>想提升你的开发效率？点击下方链接获取专属优惠，开启高效开发之旅！</p>
+        </div>
+        <a href="https://m.do.co/c/c9c6aa51c904" target="_blank" rel="nofollow noopener" class="affiliate-button">JS应用托管，DigitalOcean优惠 →</a>
+      </div>
+
+      <div class="affiliate-card secondary">
+        <div class="affiliate-icon">☁️</div>
+        <div class="affiliate-content">
+          <h4>🔥 云服务推荐</h4>
+          <p>提升开发效率？GitHub Copilot AI编程助手让你的编码速度翻倍！</p>
+        </div>
+        <a href="https://github.com/features/copilot" target="_blank" rel="nofollow noopener" class="affiliate-button">免费试用 →</a>
+      </div>
+
+      <div class="feedback-section">
+        <p class="feedback-title">📊 本文是否解决了你的问题？</p>
+        <div class="feedback-buttons">
+          <button class="feedback-btn positive" onclick="handleFeedback(true)">👍 是的，很有帮助</button>
+          <button class="feedback-btn negative" onclick="handleFeedback(false)">👎 需要改进</button>
+        </div>
+        <p class="feedback-thanks" id="feedbackThanks" style="display: none;">感谢你的反馈！我们会继续改进内容质量。</p>
+      </div>
+
+      <div class="related-articles">
+        <h3>📖 相关推荐</h3>
+        <div class="related-list">
+          
+    <div class="related-item">
+      <a href="es6-features-explained.html">ES6+新特性详解</a>
+    </div>
+  
+    <div class="related-item">
+      <a href="javascript-async-guide.html">Promise与async/await入门</a>
+    </div>
+  
+    <div class="related-item">
+      <a href="frontend-performance-optimization.html">JavaScript性能优化</a>
+    </div>
+  
+        </div>
+      </div>
+
+      <div class="article-footer">
+        <p>⚠️ 免责声明：本站内容仅供技术参考，请以官方文档为准。</p>
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="bg-white border-t border-slate-100 py-8 mt-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm text-slate-400">© 2024 技术学习指南 - 专注于编程技术学习</p>
+        <div class="flex gap-4 text-sm text-slate-400">
+          <a href="index.html" class="hover:text-indigo-600">首页</a>
+          <a href="#" class="hover:text-indigo-600">关于</a>
+          <a href="#" class="hover:text-indigo-600">隐私政策</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function handleFeedback(isPositive) {
+      document.getElementById('feedbackThanks').style.display = 'block';
+      const buttons = document.querySelectorAll('.feedback-btn');
+      buttons.forEach(btn => btn.disabled = true);
+      
+      if (isPositive) {
+        document.querySelector('.feedback-btn.positive').classList.add('selected');
+      } else {
+        document.querySelector('.feedback-btn.negative').classList.add('selected');
+      }
+    }
+  </script>
+</body>
+</html>

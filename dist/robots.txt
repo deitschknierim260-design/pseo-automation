@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://pseobuilder.net/sitemap.xml
