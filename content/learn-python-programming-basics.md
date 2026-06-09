@@ -1,14 +1,14 @@
 ---
 title: 如何学习Python编程入门
 description: 本文将从基础概念入手，为你系统地介绍Python编程的相关知识和实践经验，帮助你快速掌握核心技能。
-date: '2026-06-06'
+date: '2026-06-09'
 slug: learn-python-programming-basics
 tags:
   - 技术
   - 编程
   - 开发
   - 学习
-generated: '2026-06-06T05:22:10.667Z'
+generated: '2026-06-09T13:10:34.905Z'
 validationStatus: APPROVED
 needsHumanReview: false
 ymylContent: []

@@ -165,7 +165,14 @@ const buildArticle = async (article, template) => {
     .replaceAll('{{affiliate2Url}}', article.affiliate2Url || affiliateLinks.tools.github)
     .replaceAll('{{affiliate2Description}}', article.affiliate2Description || '提升开发效率？GitHub Copilot AI编程助手让你的编码速度翻倍！')
     .replaceAll('{{affiliate2CtaText}}', article.affiliate2CtaText || '免费试用')
-    .replaceAll('{{relatedArticles}}', relatedArticles);
+    .replaceAll('{{relatedArticles}}', relatedArticles)
+    .replaceAll('{{lang}}', 'zh-CN')
+    .replaceAll('{{ogLocale}}', 'zh_CN')
+    .replaceAll('{{siteName}}', '技术学习指南')
+    .replaceAll('{{keywords}}', '编程,技术,教程,学习,Python,JavaScript,React,Node.js')
+    .replaceAll('{{homeText}}', '首页')
+    .replaceAll('{{homeUrl}}', '')
+    .replaceAll('{{categoryText}}', '技术教程');
 
   await fs.writeFile(path.join(OUTPUT_DIR, `${article.slug}.html`), html, 'utf-8');
   console.log(`Generated: ${article.slug}.html`);
@@ -321,7 +328,14 @@ const buildEnArticle = async (article, template) => {
     .replaceAll('{{affiliate2Url}}', article.affiliate2Url || affiliateLinks.tools.github)
     .replaceAll('{{affiliate2Description}}', article.affiliate2Description || 'Boost your productivity with GitHub Copilot AI coding assistant!')
     .replaceAll('{{affiliate2CtaText}}', article.affiliate2CtaText || 'Try for free')
-    .replaceAll('{{relatedArticles}}', relatedArticles);
+    .replaceAll('{{relatedArticles}}', relatedArticles)
+    .replaceAll('{{lang}}', 'en')
+    .replaceAll('{{ogLocale}}', 'en_US')
+    .replaceAll('{{siteName}}', 'Tech Learning Guide')
+    .replaceAll('{{keywords}}', 'programming,tech,tutorial,learning,Python,JavaScript,React,Node.js')
+    .replaceAll('{{homeText}}', 'Home')
+    .replaceAll('{{homeUrl}}', 'en/')
+    .replaceAll('{{categoryText}}', 'Tech Tutorials');
 
   await fs.writeFile(path.join(EN_OUTPUT_DIR, `${cleanSlug}.html`), html, 'utf-8');
   console.log(`Generated: en/${cleanSlug}.html`);

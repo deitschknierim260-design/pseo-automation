@@ -1,14 +1,14 @@
 ---
 title: Git版本控制最佳实践
 description: 本文将从基础概念入手，为你系统地介绍Git版本控制最佳实践的相关知识和实践经验，帮助你快速掌握核心技能。
-date: '2026-06-06'
+date: '2026-06-09'
 slug: git-version-control-best-practices
 tags:
   - 技术
   - 编程
   - 开发
   - 学习
-generated: '2026-06-06T05:22:10.668Z'
+generated: '2026-06-09T13:10:34.907Z'
 validationStatus: APPROVED
 needsHumanReview: false
 ymylContent: []

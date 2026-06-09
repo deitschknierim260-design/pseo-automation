@@ -1,14 +1,14 @@
 ---
 title: JavaScript面试题及答案2024
 description: 本文将从基础概念入手，为你系统地介绍JavaScript面试题及答案2024的相关知识和实践经验，帮助你快速掌握核心技能。
-date: '2026-06-06'
+date: '2026-06-09'
 slug: javascript-interview-questions-2024
 tags:
   - 技术
   - 编程
   - 开发
   - 学习
-generated: '2026-06-06T05:22:10.668Z'
+generated: '2026-06-09T13:10:34.906Z'
 validationStatus: APPROVED
 needsHumanReview: false
 ymylContent: []

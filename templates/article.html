@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="{{lang}}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="{{description}}">
-  <meta name="keywords" content="编程,技术,教程,学习,Python,JavaScript,React,Node.js">
-  <meta name="author" content="技术学习指南">
-  <title>{{title}} - 技术学习指南</title>
+  <meta name="keywords" content="{{keywords}}">
+  <meta name="author" content="{{siteName}}">
+  <title>{{title}} - {{siteName}}</title>
   
   <!-- Canonical URL -->
   <link rel="canonical" href="https://pseobuilder.net/{{canonicalUrl}}" />
   
   <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="{{title}} - 技术学习指南" />
+  <meta property="og:title" content="{{title}} - {{siteName}}" />
   <meta property="og:description" content="{{description}}" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://pseobuilder.net/{{canonicalUrl}}" />
-  <meta property="og:site_name" content="技术学习指南" />
-  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:site_name" content="{{siteName}}" />
+  <meta property="og:locale" content="{{ogLocale}}" />
   
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="{{title}} - 技术学习指南" />
+  <meta name="twitter:title" content="{{title}} - {{siteName}}" />
   <meta name="twitter:description" content="{{description}}" />
   <meta name="twitter:site" content="@TechGuide" />
   
@@ -37,20 +37,20 @@
           {
             "@type": "ListItem",
             "position": 1,
-            "name": "首页",
-            "item": "https://pseobuilder.net/"
+            "name": "{{homeText}}",
+            "item": "https://pseobuilder.net/{{homeUrl}}"
           },
           {
             "@type": "ListItem",
             "position": 2,
-            "name": "技术教程",
-            "item": "https://pseobuilder.net/#categories"
+            "name": "{{categoryText}}",
+            "item": "https://pseobuilder.net/{{homeUrl}}#categories"
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": "{{title}}",
-            "item": "https://pseobuilder.net/{{slug}}.html"
+            "item": "https://pseobuilder.net/{{canonicalUrl}}"
           }
         ]
       },
@@ -59,7 +59,7 @@
         "@id": "#article",
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://pseobuilder.net/{{slug}}.html"
+          "@id": "https://pseobuilder.net/{{canonicalUrl}}"
         },
         "headline": "{{title}}",
         "description": "{{description}}",
@@ -69,7 +69,7 @@
         },
         "publisher": {
           "@type": "Organization",
-          "name": "技术学习指南",
+          "name": "{{siteName}}",
           "logo": {
             "@type": "ImageObject",
             "url": "https://pseobuilder.net/favicon.svg"
@@ -77,8 +77,8 @@
         },
         "datePublished": "{{date}}",
         "dateModified": "{{date}}",
-        "articleSection": "技术教程",
-        "keywords": ["编程", "技术", "教程", "学习"]
+        "articleSection": "{{categoryText}}",
+        "keywords": ["{{keywords}}"]
       }
     ]
   }

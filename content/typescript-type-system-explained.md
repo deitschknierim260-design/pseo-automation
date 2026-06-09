@@ -1,14 +1,14 @@
 ---
 title: TypeScript类型系统详解
 description: 本文将从基础概念入手，为你系统地介绍TypeScript类型系统详解的相关知识和实践经验，帮助你快速掌握核心技能。
-date: '2026-06-06'
+date: '2026-06-09'
 slug: typescript-type-system-explained
 tags:
   - 技术
   - 编程
   - 开发
   - 学习
-generated: '2026-06-06T05:22:10.669Z'
+generated: '2026-06-09T13:10:34.908Z'
 validationStatus: APPROVED
 needsHumanReview: false
 ymylContent: []
